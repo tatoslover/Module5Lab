@@ -342,18 +342,28 @@
             </div>
 
             <div class="mock-notice">
-                <h4>📡 Simulation Mode Active</h4>
+                <h4>🎭 Simulation Mode Active</h4>
                 <p>
-                    This documentation is running in simulation mode with mock
-                    data.
+                    <strong
+                        >This documentation is running in full simulation mode
+                        with realistic mock data.</strong
+                    >
                 </p>
                 <p>
-                    All API responses are simulated and don't require actual
-                    servers to be running.
+                    ✅ <strong>How it works:</strong> Each endpoint shows
+                    realistic example responses that demonstrate what the actual
+                    APIs would return when called.
                 </p>
                 <p>
-                    Click "Try it out" to test endpoints with realistic mock
-                    responses!
+                    📊 <strong>What you'll see:</strong> Realistic JSON
+                    responses that match what the actual APIs would return,
+                    including proper data structures, timestamps, and operation
+                    results.
+                </p>
+                <p>
+                    🚀 <strong>Perfect for:</strong> Understanding response
+                    formats, data structures, and expected API behavior without
+                    needing running servers.
                 </p>
             </div>
 
@@ -556,7 +566,7 @@
                             plugins: [SwaggerUIBundle.plugins.DownloadUrl],
                             layout: "StandaloneLayout",
                             validatorUrl: null,
-                            tryItOutEnabled: true,
+                            tryItOutEnabled: false,
                             supportedSubmitMethods: [
                                 "get",
                                 "post",
@@ -564,44 +574,7 @@
                                 "delete",
                                 "patch",
                             ],
-                            requestInterceptor: function (request) {
-                                console.log(
-                                    "🔄 Intercepting request:",
-                                    request,
-                                );
 
-                                // Always return mock response immediately
-                                return new Promise((resolve) => {
-                                    // Ensure we have a valid request object
-                                    const safeRequest = {
-                                        url: request?.url || "/default",
-                                        method: request?.method || "GET",
-                                        headers: request?.headers || {},
-                                        body: request?.body || null,
-                                    };
-
-                                    console.log(
-                                        "🎭 Generating mock response for:",
-                                        safeRequest.url,
-                                    );
-
-                                    setTimeout(
-                                        () => {
-                                            const mockResponse =
-                                                getMockResponse(
-                                                    exerciseNumber,
-                                                    safeRequest,
-                                                );
-                                            console.log(
-                                                "✅ Mock response generated:",
-                                                mockResponse,
-                                            );
-                                            resolve(mockResponse);
-                                        },
-                                        300 + Math.random() * 200,
-                                    );
-                                });
-                            },
                             onComplete: function () {
                                 console.log(
                                     `✅ Swagger UI loaded for Exercise ${exerciseNumber}`,
@@ -699,9 +672,230 @@
 
             // Mock response generator for simulation
             function getMockResponse(exerciseNumber, request) {
-                // Default mock response structure
-                const mockResponse = {
-                    url: request.url || "/",
+                const url = request?.url || "/";
+                const method = request?.method || "GET";
+
+                // Generate realistic mock responses based on exercise and endpoint
+                let responseData = {};
+
+                if (exerciseNumber === 1) {
+                    if (url.includes("/health")) {
+                        responseData = {
+                            status: "healthy",
+                            server: "Mock Server 1",
+                            port: 3001,
+                            uptime: 3600,
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else {
+                        responseData = {
+                            message:
+                                "Welcome to Exercise 1 - Multi-Port Server Management!",
+                            server: "Mock Server 1",
+                            port: 3001,
+                            timestamp: new Date().toISOString(),
+                        };
+                    }
+                } else if (exerciseNumber >= 2 && exerciseNumber <= 7) {
+                    // Calculator APIs
+                    if (url.includes("/add")) {
+                        responseData = {
+                            operation: "addition",
+                            num1: 10,
+                            num2: 5,
+                            result: 15,
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else if (url.includes("/subtract")) {
+                        responseData = {
+                            operation: "subtraction",
+                            num1: 20,
+                            num2: 8,
+                            result: 12,
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else if (url.includes("/multiply")) {
+                        responseData = {
+                            operation: "multiplication",
+                            num1: 6,
+                            num2: 7,
+                            result: 42,
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else if (url.includes("/divide")) {
+                        responseData = {
+                            operation: "division",
+                            num1: 50,
+                            num2: 10,
+                            result: 5,
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else {
+                        responseData = {
+                            message: `Welcome to Exercise ${exerciseNumber} Calculator API!`,
+                            availableOperations: [
+                                "add",
+                                "subtract",
+                                "multiply",
+                                "divide",
+                            ],
+                            timestamp: new Date().toISOString(),
+                        };
+                    }
+                } else if (exerciseNumber === 4 || exerciseNumber === 5) {
+                    // Friends APIs
+                    if (url.includes("/friends") && method === "GET") {
+                        if (url.includes("/filter")) {
+                            responseData = {
+                                message: "Friends filtered successfully",
+                                count: 2,
+                                filters: { gender: "male", letter: "J" },
+                                friends: [
+                                    { id: 1, name: "John Doe", gender: "male" },
+                                    {
+                                        id: 3,
+                                        name: "James Smith",
+                                        gender: "male",
+                                    },
+                                ],
+                                timestamp: new Date().toISOString(),
+                            };
+                        } else {
+                            responseData = {
+                                message: "Retrieved all friends successfully",
+                                count: 5,
+                                friends: [
+                                    { id: 1, name: "John Doe", gender: "male" },
+                                    {
+                                        id: 2,
+                                        name: "Jane Smith",
+                                        gender: "female",
+                                    },
+                                    {
+                                        id: 3,
+                                        name: "James Smith",
+                                        gender: "male",
+                                    },
+                                    {
+                                        id: 4,
+                                        name: "Emily Johnson",
+                                        gender: "female",
+                                    },
+                                    {
+                                        id: 5,
+                                        name: "Michael Brown",
+                                        gender: "male",
+                                    },
+                                ],
+                                timestamp: new Date().toISOString(),
+                            };
+                        }
+                    } else if (url.includes("/friends") && method === "POST") {
+                        responseData = {
+                            message: "Friend added successfully",
+                            friend: {
+                                id: 6,
+                                name: "Alice Johnson",
+                                gender: "female",
+                            },
+                            totalFriends: 6,
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else {
+                        responseData = {
+                            message: `Welcome to Exercise ${exerciseNumber} Friends API!`,
+                            availableEndpoints: ["/friends", "/friends/filter"],
+                            timestamp: new Date().toISOString(),
+                        };
+                    }
+                } else if (exerciseNumber === 8) {
+                    // eCommerce API
+                    if (url.includes("/products/categories")) {
+                        responseData = {
+                            success: true,
+                            count: 4,
+                            data: [
+                                "electronics",
+                                "jewelery",
+                                "men's clothing",
+                                "women's clothing",
+                            ],
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else if (url.includes("/products/search")) {
+                        responseData = {
+                            success: true,
+                            query: "backpack",
+                            count: 1,
+                            data: [
+                                {
+                                    id: 1,
+                                    title: "Fjallraven - Foldsack No. 1 Backpack",
+                                    price: 109.95,
+                                    category: "men's clothing",
+                                    description:
+                                        "Your perfect pack for everyday use",
+                                },
+                            ],
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else if (url.includes("/products")) {
+                        responseData = {
+                            success: true,
+                            count: 3,
+                            data: [
+                                {
+                                    id: 1,
+                                    title: "Fjallraven - Foldsack No. 1 Backpack",
+                                    price: 109.95,
+                                    category: "men's clothing",
+                                    description:
+                                        "Your perfect pack for everyday use",
+                                },
+                                {
+                                    id: 2,
+                                    title: "Mens Casual Premium Slim Fit T-Shirts",
+                                    price: 22.3,
+                                    category: "men's clothing",
+                                    description: "Slim-fitting style for men",
+                                },
+                                {
+                                    id: 3,
+                                    title: "Mens Cotton Jacket",
+                                    price: 55.99,
+                                    category: "men's clothing",
+                                    description: "Great outerwear for men",
+                                },
+                            ],
+                            timestamp: new Date().toISOString(),
+                        };
+                    } else {
+                        responseData = {
+                            message:
+                                "Welcome to Exercise 8 - eCommerce Store API!",
+                            availableEndpoints: [
+                                "/api/products",
+                                "/api/products/categories",
+                                "/api/products/search",
+                            ],
+                            timestamp: new Date().toISOString(),
+                        };
+                    }
+                } else {
+                    responseData = {
+                        message: `Mock response for Exercise ${exerciseNumber}`,
+                        timestamp: new Date().toISOString(),
+                        success: true,
+                        data: {
+                            exerciseNumber: exerciseNumber,
+                            endpoint: url,
+                            method: method,
+                        },
+                    };
+                }
+
+                return {
+                    url: url,
                     status: 200,
                     statusText: "OK",
                     headers: {
@@ -709,46 +903,8 @@
                         "X-Mock-Response": "true",
                         "Access-Control-Allow-Origin": "*",
                     },
-                    text: JSON.stringify({
-                        message: `Mock response for Exercise ${exerciseNumber}`,
-                        timestamp: new Date().toISOString(),
-                        success: true,
-                        data: {
-                            exerciseNumber: exerciseNumber,
-                            endpoint: request.url,
-                            method: request.method || "GET",
-                        },
-                    }),
+                    text: JSON.stringify(responseData),
                 };
-
-                // Simple exercise-specific responses
-                if (exerciseNumber === 1) {
-                    mockResponse.text = JSON.stringify({
-                        message:
-                            "Welcome to Exercise 1 - Multi-Port Server Management!",
-                        server: "Mock Server 1",
-                        port: 3001,
-                        timestamp: new Date().toISOString(),
-                    });
-                } else if (exerciseNumber >= 2 && exerciseNumber <= 7) {
-                    mockResponse.text = JSON.stringify({
-                        message: `Welcome to Exercise ${exerciseNumber} Calculator API!`,
-                        operation: "sample",
-                        result: 42,
-                        timestamp: new Date().toISOString(),
-                    });
-                } else if (exerciseNumber === 8) {
-                    mockResponse.text = JSON.stringify({
-                        message: "Welcome to Exercise 8 - eCommerce Store API!",
-                        products: [
-                            { id: 1, name: "Sample Product", price: 29.99 },
-                            { id: 2, name: "Another Product", price: 19.99 },
-                        ],
-                        timestamp: new Date().toISOString(),
-                    });
-                }
-
-                return mockResponse;
             }
 
             // Initialize the app
