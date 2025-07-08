@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>eCommerce API - Module 5 Lab</title>
+        <link rel="stylesheet" href="css/exercise8.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>🛒 eCommerce API</h1>
+                <p>
+                    Full-featured eCommerce API with product management, order processing, and Swagger documentation
+                </p>
+            </div>
+
+            <div class="nav">
+                <a href="index.html">← Back to Home</a>
+                <a href="exercise7.html">Previous: Enhanced Calculator</a>
+                <a href="#" onclick="openSwaggerDocs()">📖 Swagger Docs</a>
+                <a
+                    href="https://github.com/samuellove/Module5Lab/tree/main/exercise8"
+                    target="_blank"
+                    >GitHub</a
+                >
+            </div>
+
+            <div class="api-overview">
+                <h2>🏪 eCommerce Platform Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card products">
+                        <h3>📦 Product Management</h3>
+                        <p>Complete product catalog with categories and inventory</p>
+                        <ul>
+                            <li>Product CRUD operations</li>
+                            <li>Category management</li>
+                            <li>Inventory tracking</li>
+                            <li>Price management</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card orders">
+                        <h3>📋 Order Processing</h3>
+                        <p>Comprehensive order management system</p>
+                        <ul>
+                            <li>Order creation and tracking</li>
+                            <li>Order status management</li>
+                            <li>Order history</li>
+                            <li>Payment processing</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card users">
+                        <h3>👥 User Management</h3>
+                        <p>Customer account and profile management</p>
+                        <ul>
+                            <li>User registration</li>
+                            <li>Profile management</li>
+                            <li>Shopping cart</li>
+                            <li>Wishlist functionality</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card docs">
+                        <h3>📚 API Documentation</h3>
+                        <p>Interactive Swagger documentation</p>
+                        <ul>
+                            <li>Auto-generated docs</li>
+                            <li>Interactive testing</li>
+                            <li>Schema validation</li>
+                            <li>Example requests</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="controls-section">
+                    <h2>🎮 API Controls</h2>
+
+                    <div class="control-tabs">
+                        <button class="tab-btn active" onclick="showControlTab('products')">📦 Products</button>
+                        <button class="tab-btn" onclick="showControlTab('orders')">📋 Orders</button>
+                        <button class="tab-btn" onclick="showControlTab('users')">👥 Users</button>
+                        <button class="tab-btn" onclick="showControlTab('analytics')">📊 Analytics</button>
+                    </div>
+
+                    <div class="control-content">
+                        <div id="products" class="control-tab active">
+                            <h3>Product Management</h3>
+                            <div class="control-buttons">
+                                <button class="btn btn-primary" onclick="loadAllProducts()">
+                                    📦 Load All Products
+                                </button>
+                                <button class="btn btn-success" onclick="addProductForm()">
+                                    ➕ Add Product
+                                </button>
+                                <button class="btn btn-info" onclick="loadCategories()">
+                                    🏷️ Categories
+                                </button>
+                                <button class="btn btn-warning" onclick="checkInventory()">
+                                    📊 Inventory
+                                </button>
+                            </div>
+                            <div class="filter-section">
+                                <h4>Filter Products</h4>
+                                <div class="filter-controls">
+                                    <select id="categoryFilter">
+                                        <option value="">All Categories</option>
+                                        <option value="electronics">Electronics</option>
+                                        <option value="clothing">Clothing</option>
+                                        <option value="books">Books</option>
+                                        <option value="home">Home & Garden</option>
+                                    </select>
+                                    <input type="text" id="productSearch" placeholder="Search products..." />
+                                    <button class="btn btn-small" onclick="applyProductFilters()">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="orders" class="control-tab">
+                            <h3>Order Management</h3>
+                            <div class="control-buttons">
+                                <button class="btn btn-primary" onclick="loadAllOrders()">
+                                    📋 Load All Orders
+                                </button>
+                                <button class="btn btn-success" onclick="createTestOrder()">
+                                    ➕ Create Test Order
+                                </button>
+                                <button class="btn btn-info" onclick="getOrderStats()">
+                                    📈 Order Statistics
+                                </button>
+                                <button class="btn btn-warning" onclick="processPendingOrders()">
+                                    ⚡ Process Pending
+                                </button>
+                            </div>
+                            <div class="order-filters">
+                                <h4>Order Filters</h4>
+                                <div class="filter-controls">
+                                    <select id="orderStatusFilter">
+                                        <option value="">All Statuses</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="shipped">Shipped</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                    <input type="date" id="orderDateFilter" />
+                                    <button class="btn btn-small" onclick="applyOrderFilters()">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="users" class="control-tab">
+                            <h3>User Management</h3>
+                            <div class="control-buttons">
+                                <button class="btn btn-primary" onclick="loadAllUsers()">
+                                    👥 Load All Users
+                                </button>
+                                <button class="btn btn-success" onclick="createTestUser()">
+                                    ➕ Create Test User
+                                </button>
+                                <button class="btn btn-info" onclick="getUserStats()">
+                                    📊 User Statistics
+                                </button>
+                                <button class="btn btn-purple" onclick="getShoppingCarts()">
+                                    🛒 Shopping Carts
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="analytics" class="control-tab">
+                            <h3>Analytics & Reports</h3>
+                            <div class="control-buttons">
+                                <button class="btn btn-primary" onclick="getSalesReport()">
+                                    📈 Sales Report
+                                </button>
+                                <button class="btn btn-success" onclick="getProductAnalytics()">
+                                    📊 Product Analytics
+                                </button>
+                                <button class="btn btn-info" onclick="getCustomerAnalytics()">
+                                    👥 Customer Analytics
+                                </button>
+                                <button class="btn btn-warning" onclick="getInventoryReport()">
+                                    📦 Inventory Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="display-section">
+                    <h2>
+                        <span class="api-indicator"></span>
+                        eCommerce Data
+                        <span id="dataCount" class="count-badge">0 items</span>
+                    </h2>
+
+                    <div class="display-tabs">
+                        <button class="display-tab-btn active" onclick="showDisplayTab('grid')">🔲 Grid View</button>
+                        <button class="display-tab-btn" onclick="showDisplayTab('list')">📋 List View</button>
+                        <button class="display-tab-btn" onclick="showDisplayTab('json')">📄 JSON View</button>
+                        <button class="display-tab-btn" onclick="showDisplayTab('swagger')">📖 Swagger</button>
+                    </div>
+
+                    <div id="displayContent">
+                        <div id="grid" class="display-content active">
+                            <div class="placeholder">
+                                <h3>🛒 Welcome to eCommerce API</h3>
+                                <p>Select an action from the controls to get started</p>
+                                <div class="quick-actions">
+                                    <button class="btn btn-primary" onclick="loadAllProducts()">
+                                        View Products
+                                    </button>
+                                    <button class="btn btn-success" onclick="loadAllOrders()">
+                                        View Orders
+                                    </button>
+                                    <button class="btn btn-info" onclick="openSwaggerDocs()">
+                                        API Documentation
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="list" class="display-content">
+                            <div class="list-container">
+                                <p>List view will appear here</p>
+                            </div>
+                        </div>
+
+                        <div id="json" class="display-content">
+                            <div class="json-container">
+                                <pre id="jsonOutput">JSON data will appear here</pre>
+                            </div>
+                        </div>
+
+                        <div id="swagger" class="display-content">
+                            <div class="swagger-container">
+                                <h3>📖 API Documentation</h3>
+                                <div class="swagger-info">
+                                    <p>Interactive Swagger documentation is available at:</p>
+                                    <div class="swagger-link">
+                                        <a href="http://localhost:3008/api-docs" target="_blank">
+                                            http://localhost:3008/api-docs
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="swagger-preview">
+                                    <h4>Available Endpoints:</h4>
+                                    <div class="endpoint-list">
+                                        <div class="endpoint-group">
+                                            <h5>Products</h5>
+                                            <div class="endpoint">
+                                                <span class="method get">GET</span>
+                                                <span class="path">/api/products</span>
+                                                <span class="description">Get all products</span>
+                                            </div>
+                                            <div class="endpoint">
+                                                <span class="method get">GET</span>
+                                                <span class="path">/api/products/:id</span>
+                                                <span class="description">Get product by ID</span>
+                                            </div>
+                                            <div class="endpoint">
+                                                <span class="method post">POST</span>
+                                                <span class="path">/api/products</span>
+                                                <span class="description">Create new product</span>
+                                            </div>
+                                        </div>
+                                        <div class="endpoint-group">
+                                            <h5>Orders</h5>
+                                            <div class="endpoint">
+                                                <span class="method get">GET</span>
+                                                <span class="path">/api/orders</span>
+                                                <span class="description">Get all orders</span>
+                                            </div>
+                                            <div class="endpoint">
+                                                <span class="method post">POST</span>
+                                                <span class="path">/api/orders</span>
+                                                <span class="description">Create new order</span>
+                                            </div>
+                                            <div class="endpoint">
+                                                <span class="method put">PUT</span>
+                                                <span class="path">/api/orders/:id</span>
+                                                <span class="description">Update order status</span>
+                                            </div>
+                                        </div>
+                                        <div class="endpoint-group">
+                                            <h5>Users</h5>
+                                            <div class="endpoint">
+                                                <span class="method get">GET</span>
+                                                <span class="path">/api/users</span>
+                                                <span class="description">Get all users</span>
+                                            </div>
+                                            <div class="endpoint">
+                                                <span class="method post">POST</span>
+                                                <span class="path">/api/users</span>
+                                                <span class="description">Create new user</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-product-modal" id="addProductModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>➕ Add New Product</h3>
+                        <button class="close-btn" onclick="closeAddProductForm()">&times;</button>
+                    </div>
+                    <form id="addProductForm">
+                        <div class="form-group">
+                            <label for="productName">Product Name:</label>
+                            <input type="text" id="productName" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Category:</label>
+                            <select id="productCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="books">Books</option>
+                                <option value="home">Home & Garden</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Price ($):</label>
+                            <input type="number" id="productPrice" step="0.01" min="0" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription">Description:</label>
+                            <textarea id="productDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock">Stock Quantity:</label>
+                            <input type="number" id="productStock" min="0" required />
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Add Product</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeAddProductForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h3>📊 eCommerce Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-number" id="totalProducts">0</div>
+                        <div class="stat-label">Total Products</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-number" id="totalOrders">0</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-number" id="totalRevenue">$0</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/exercise8.js"></script>
+    </body>
+</html>

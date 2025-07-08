@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Exercise 1 Demo - Multiple Web Servers</title>
+        <link rel="stylesheet" href="css/exercise1.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>🖥️ Exercise 1 Demo</h1>
+                <p>Multiple Web Servers Running on Different Ports</p>
+            </div>
+
+            <div class="exercise-description">
+                <h2>📋 Exercise Question</h2>
+                <p>
+                    <strong
+                        >Create a basic back-end application with multiple web
+                        servers running on different ports.</strong
+                    >
+                </p>
+                <p>
+                    This demo simulates the experience of running multiple
+                    Express.js servers simultaneously, each serving different
+                    purposes and running on different ports (3001, 3002, 3003).
+                </p>
+            </div>
+
+            <div class="nav">
+                <a href="index.html">← Back to Home</a>
+                <a href="exercise2.html">Calculator Demo</a>
+                <a href="exercise4.html">Friends Demo</a>
+                <a
+                    href="https://github.com/samuellove/Module5Lab"
+                    target="_blank"
+                    >GitHub</a
+                >
+            </div>
+
+            <div class="servers-grid">
+                <div class="server-card">
+                    <div class="server-header">
+                        <div class="server-title">🔧 Server 1</div>
+                        <div class="server-port">Port 3001</div>
+                    </div>
+                    <div class="server-status">
+                        <div class="status-dot"></div>
+                        <span>Online - Basic Server</span>
+                    </div>
+                    <div class="server-description">
+                        Basic Express.js server with health checks and echo
+                        functionality. Demonstrates fundamental server
+                        operations and request handling.
+                    </div>
+                    <div class="endpoints-list">
+                        <h4>Available Endpoints:</h4>
+                        <ul>
+                            <li>GET / - Welcome message</li>
+                            <li>GET /health - Health check</li>
+                            <li>GET /info - Server information</li>
+                            <li>POST /echo - Echo back request body</li>
+                        </ul>
+                    </div>
+                    <div class="test-buttons">
+                        <button
+                            class="test-btn btn-primary"
+                            onclick="testServer(1, '/')"
+                        >
+                            Test Home
+                        </button>
+                        <button
+                            class="test-btn btn-success"
+                            onclick="testServer(1, '/health')"
+                        >
+                            Health Check
+                        </button>
+                        <button
+                            class="test-btn btn-info"
+                            onclick="testServer(1, '/info')"
+                        >
+                            Server Info
+                        </button>
+                        <button
+                            class="test-btn btn-warning"
+                            onclick="testEcho(1)"
+                        >
+                            Test Echo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="server-card">
+                    <div class="server-header">
+                        <div class="server-title">📊 Server 2</div>
+                        <div class="server-port">Port 3002</div>
+                    </div>
+                    <div class="server-status">
+                        <div class="status-dot"></div>
+                        <span>Online - Data Processing</span>
+                    </div>
+                    <div class="server-description">
+                        Data processing server with user management and random
+                        data generation. Focuses on data manipulation and
+                        business logic.
+                    </div>
+                    <div class="endpoints-list">
+                        <h4>Available Endpoints:</h4>
+                        <ul>
+                            <li>GET / - Welcome message</li>
+                            <li>GET /health - Health check</li>
+                            <li>GET /users - Sample user data</li>
+                            <li>POST /process - Process data</li>
+                            <li>GET /random - Random number generator</li>
+                        </ul>
+                    </div>
+                    <div class="test-buttons">
+                        <button
+                            class="test-btn btn-primary"
+                            onclick="testServer(2, '/')"
+                        >
+                            Test Home
+                        </button>
+                        <button
+                            class="test-btn btn-success"
+                            onclick="testServer(2, '/health')"
+                        >
+                            Health Check
+                        </button>
+                        <button
+                            class="test-btn btn-info"
+                            onclick="testServer(2, '/users')"
+                        >
+                            Get Users
+                        </button>
+                        <button
+                            class="test-btn btn-warning"
+                            onclick="testServer(2, '/random')"
+                        >
+                            Random Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="server-card">
+                    <div class="server-header">
+                        <div class="server-title">🛠️ Server 3</div>
+                        <div class="server-port">Port 3003</div>
+                    </div>
+                    <div class="server-status">
+                        <div class="status-dot"></div>
+                        <span>Online - Utility Server</span>
+                    </div>
+                    <div class="server-description">
+                        Utility server providing various tools and services.
+                        Includes time services, status codes, and header
+                        analysis.
+                    </div>
+                    <div class="endpoints-list">
+                        <h4>Available Endpoints:</h4>
+                        <ul>
+                            <li>GET / - Welcome message</li>
+                            <li>GET /health - Health check</li>
+                            <li>GET /time - Current timestamp</li>
+                            <li>GET /status/:code - HTTP status test</li>
+                            <li>POST /validate - Data validation</li>
+                            <li>GET /headers - Request headers</li>
+                        </ul>
+                    </div>
+                    <div class="test-buttons">
+                        <button
+                            class="test-btn btn-primary"
+                            onclick="testServer(3, '/')"
+                        >
+                            Test Home
+                        </button>
+                        <button
+                            class="test-btn btn-success"
+                            onclick="testServer(3, '/health')"
+                        >
+                            Health Check
+                        </button>
+                        <button
+                            class="test-btn btn-info"
+                            onclick="testServer(3, '/time')"
+                        >
+                            Get Time
+                        </button>
+                        <button
+                            class="test-btn btn-warning"
+                            onclick="testServer(3, '/headers')"
+                        >
+                            Headers
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>🧪 Live Testing Interface</h2>
+                <p>
+                    Click the buttons above to test different server endpoints.
+                    The responses will appear below:
+                </p>
+                <div class="response-display" id="responseDisplay">
+                    Ready to test servers... Click any button above to get
+                    started!
+                </div>
+            </div>
+
+            <div class="comparison-table">
+                <h3>📈 Server Comparison</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <strong>Server 1</strong>
+                        <div>Basic Operations</div>
+                        <div>Health Monitoring</div>
+                        <div>Echo Service</div>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Server 2</strong>
+                        <div>Data Processing</div>
+                        <div>User Management</div>
+                        <div>Random Generation</div>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Server 3</strong>
+                        <div>Utility Services</div>
+                        <div>Time Services</div>
+                        <div>Header Analysis</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/exercise1.js"></script>
+    </body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Calculator with Tests - Module 5 Lab</title>
+        <link rel="stylesheet" href="css/exercise6.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>🧪 Calculator with Tests</h1>
+                <p>
+                    Professional calculator API with comprehensive unit and integration tests using Jest
+                </p>
+            </div>
+
+            <div class="nav">
+                <a href="index.html">← Back to Home</a>
+                <a href="exercise5.html">Previous: MVC API</a>
+                <a href="exercise7.html">Next: Enhanced Calculator</a>
+                <a
+                    href="https://github.com/samuellove/Module5Lab/tree/main/exercise6"
+                    target="_blank"
+                    >GitHub</a
+                >
+            </div>
+
+            <div class="testing-overview">
+                <h2>🔬 Testing Framework Overview</h2>
+                <div class="testing-grid">
+                    <div class="test-type unit">
+                        <h3>🧪 Unit Tests</h3>
+                        <p>Test individual functions and methods in isolation</p>
+                        <ul>
+                            <li>Test all calculator operations</li>
+                            <li>Edge case validation</li>
+                            <li>Error handling verification</li>
+                        </ul>
+                    </div>
+                    <div class="test-type integration">
+                        <h3>🔗 Integration Tests</h3>
+                        <p>Test API endpoints and component interactions</p>
+                        <ul>
+                            <li>HTTP endpoint testing</li>
+                            <li>Request/response validation</li>
+                            <li>Error status codes</li>
+                        </ul>
+                    </div>
+                    <div class="test-type coverage">
+                        <h3>📊 Coverage Reports</h3>
+                        <p>Measure test coverage and code quality</p>
+                        <ul>
+                            <li>Line coverage analysis</li>
+                            <li>Branch coverage reporting</li>
+                            <li>Function coverage metrics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="calculator-panel">
+                    <h2>🧮 Calculator Interface</h2>
+
+                    <div class="calculator">
+                        <div class="display">
+                            <div class="operation-display" id="operationDisplay">Ready</div>
+                            <div class="result-display" id="resultDisplay">0</div>
+                        </div>
+
+                        <div class="calculator-grid">
+                            <button class="btn btn-clear" onclick="clearCalculator()">C</button>
+                            <button class="btn btn-operation" onclick="performOperation('sqrt')">√</button>
+                            <button class="btn btn-operation" onclick="performOperation('power')">x²</button>
+                            <button class="btn btn-operation" onclick="performOperation('divide')">÷</button>
+
+                            <button class="btn btn-number" onclick="inputNumber('7')">7</button>
+                            <button class="btn btn-number" onclick="inputNumber('8')">8</button>
+                            <button class="btn btn-number" onclick="inputNumber('9')">9</button>
+                            <button class="btn btn-operation" onclick="performOperation('multiply')">×</button>
+
+                            <button class="btn btn-number" onclick="inputNumber('4')">4</button>
+                            <button class="btn btn-number" onclick="inputNumber('5')">5</button>
+                            <button class="btn btn-number" onclick="inputNumber('6')">6</button>
+                            <button class="btn btn-operation" onclick="performOperation('subtract')">−</button>
+
+                            <button class="btn btn-number" onclick="inputNumber('1')">1</button>
+                            <button class="btn btn-number" onclick="inputNumber('2')">2</button>
+                            <button class="btn btn-number" onclick="inputNumber('3')">3</button>
+                            <button class="btn btn-operation" onclick="performOperation('add')">+</button>
+
+                            <button class="btn btn-number btn-zero" onclick="inputNumber('0')">0</button>
+                            <button class="btn btn-number" onclick="inputDecimal()">.</button>
+                            <button class="btn btn-equals" onclick="calculateResult()">=</button>
+                        </div>
+                    </div>
+
+                    <div class="operation-buttons">
+                        <button class="btn btn-api" onclick="testAddition()">Test Addition</button>
+                        <button class="btn btn-api" onclick="testSubtraction()">Test Subtraction</button>
+                        <button class="btn btn-api" onclick="testMultiplication()">Test Multiplication</button>
+                        <button class="btn btn-api" onclick="testDivision()">Test Division</button>
+                    </div>
+                </div>
+
+                <div class="test-results-panel">
+                    <h2>
+                        <span class="test-indicator"></span>
+                        Test Results
+                        <span id="testStatus" class="test-status">Ready</span>
+                    </h2>
+
+                    <div class="test-controls">
+                        <button class="btn btn-success" onclick="runAllTests()">
+                            🧪 Run All Tests
+                        </button>
+                        <button class="btn btn-info" onclick="runUnitTests()">
+                            🔬 Unit Tests
+                        </button>
+                        <button class="btn btn-warning" onclick="runIntegrationTests()">
+                            🔗 Integration Tests
+                        </button>
+                        <button class="btn btn-purple" onclick="getCoverageReport()">
+                            📊 Coverage Report
+                        </button>
+                    </div>
+
+                    <div id="testResultsContainer">
+                        <div class="test-placeholder">
+                            <h3>🧪 Test Environment Ready</h3>
+                            <p>Click "Run All Tests" to execute the complete test suite</p>
+                            <div class="test-features">
+                                <div class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span>Jest Testing Framework</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span>Supertest for API Testing</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span>Coverage Reports</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span>Watch Mode Support</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="api-endpoints">
+                <h2>🔌 API Endpoints</h2>
+                <div class="endpoint-grid">
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="endpoint-path">/add</span>
+                        </div>
+                        <div class="endpoint-description">
+                            <p>Add two numbers</p>
+                            <code>?a=5&b=3 → {"result": 8}</code>
+                        </div>
+                    </div>
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="endpoint-path">/subtract</span>
+                        </div>
+                        <div class="endpoint-description">
+                            <p>Subtract two numbers</p>
+                            <code>?a=5&b=3 → {"result": 2}</code>
+                        </div>
+                    </div>
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="endpoint-path">/multiply</span>
+                        </div>
+                        <div class="endpoint-description">
+                            <p>Multiply two numbers</p>
+                            <code>?a=5&b=3 → {"result": 15}</code>
+                        </div>
+                    </div>
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="endpoint-path">/divide</span>
+                        </div>
+                        <div class="endpoint-description">
+                            <p>Divide two numbers</p>
+                            <code>?a=6&b=3 → {"result": 2}</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-metrics">
+                <h3>📈 Test Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-number" id="totalTests">0</div>
+                        <div class="metric-label">Total Tests</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number" id="passedTests">0</div>
+                        <div class="metric-label">Passed</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number" id="failedTests">0</div>
+                        <div class="metric-label">Failed</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number" id="coveragePercent">0%</div>
+                        <div class="metric-label">Coverage</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/exercise6.js"></script>
+    </body>
+</html>

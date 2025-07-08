@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Friends API - MVC Architecture - Module 5 Lab</title>
+        <link rel="stylesheet" href="css/exercise5.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>🏗️ Friends API - MVC Architecture</h1>
+                <p>
+                    Explore the Model-View-Controller architecture pattern with our enhanced Friends API
+                </p>
+            </div>
+
+            <div class="nav">
+                <a href="index.html">← Back to Home</a>
+                <a href="exercise4.html">Previous: Friends API</a>
+                <a href="exercise6.html">Next: Calculator Tests</a>
+                <a
+                    href="https://github.com/samuellove/Module5Lab/tree/main/exercise5"
+                    target="_blank"
+                    >GitHub</a
+                >
+            </div>
+
+            <div class="architecture-info">
+                <h2>🏛️ MVC Architecture Overview</h2>
+                <div class="mvc-diagram">
+                    <div class="mvc-component model">
+                        <h3>📊 Model</h3>
+                        <p>Data structure and business logic</p>
+                        <ul>
+                            <li>Friend data management</li>
+                            <li>Data validation</li>
+                            <li>Business rules</li>
+                        </ul>
+                    </div>
+                    <div class="mvc-component view">
+                        <h3>👁️ View</h3>
+                        <p>User interface and presentation</p>
+                        <ul>
+                            <li>JSON responses</li>
+                            <li>Data formatting</li>
+                            <li>Error messages</li>
+                        </ul>
+                    </div>
+                    <div class="mvc-component controller">
+                        <h3>🎛️ Controller</h3>
+                        <p>Request handling and coordination</p>
+                        <ul>
+                            <li>Route handling</li>
+                            <li>Input validation</li>
+                            <li>Model coordination</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="controls-panel">
+                    <h2>🔧 API Controls</h2>
+
+                    <div class="endpoint-section">
+                        <h3>Available Endpoints</h3>
+                        <div class="endpoint-list">
+                            <div class="endpoint-item">
+                                <span class="method get">GET</span>
+                                <span class="path">/friends</span>
+                                <span class="description">Get all friends</span>
+                            </div>
+                            <div class="endpoint-item">
+                                <span class="method get">GET</span>
+                                <span class="path">/friends/:id</span>
+                                <span class="description">Get friend by ID</span>
+                            </div>
+                            <div class="endpoint-item">
+                                <span class="method post">POST</span>
+                                <span class="path">/friends</span>
+                                <span class="description">Add new friend</span>
+                            </div>
+                            <div class="endpoint-item">
+                                <span class="method put">PUT</span>
+                                <span class="path">/friends/:id</span>
+                                <span class="description">Update friend</span>
+                            </div>
+                            <div class="endpoint-item">
+                                <span class="method delete">DELETE</span>
+                                <span class="path">/friends/:id</span>
+                                <span class="description">Delete friend</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Filter Friends</h3>
+                        <div class="filter-controls">
+                            <div class="filter-group">
+                                <label for="genderFilter">Gender:</label>
+                                <select id="genderFilter">
+                                    <option value="">All Genders</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="non-binary">Non-Binary</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="nameFilter">Name contains:</label>
+                                <input
+                                    type="text"
+                                    id="nameFilter"
+                                    placeholder="Enter name to search"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="loadAllFriends()">
+                            👥 Load All Friends
+                        </button>
+                        <button class="btn btn-success" onclick="applyFilters()">
+                            🔍 Apply Filters
+                        </button>
+                        <button class="btn btn-info" onclick="loadApiInfo()">
+                            📊 API Architecture
+                        </button>
+                        <button class="btn btn-warning" onclick="loadRandomFriend()">
+                            🎲 Random Friend
+                        </button>
+                        <button class="btn btn-purple" onclick="showAddFriendForm()">
+                            ➕ Add Friend
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-panel">
+                    <h2>
+                        <span class="status-indicator"></span>
+                        MVC Friends Database
+                        <span id="friendsCount" class="count-badge"></span>
+                    </h2>
+
+                    <div id="contentContainer">
+                        <div class="loading">
+                            <div class="loading-spinner"></div>
+                            <p>Loading MVC architecture...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-friend-modal" id="addFriendModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>➕ Add New Friend</h3>
+                        <button class="close-btn" onclick="closeAddFriendForm()">&times;</button>
+                    </div>
+                    <form id="addFriendForm">
+                        <div class="form-group">
+                            <label for="friendName">Name:</label>
+                            <input type="text" id="friendName" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="friendAge">Age:</label>
+                            <input type="number" id="friendAge" min="1" max="120" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="friendGender">Gender:</label>
+                            <select id="friendGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="non-binary">Non-Binary</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="friendEmail">Email:</label>
+                            <input type="email" id="friendEmail" required />
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Add Friend</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeAddFriendForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h3>📈 MVC Architecture Benefits</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔄</div>
+                        <div class="benefit-title">Separation of Concerns</div>
+                        <div class="benefit-description">Clean separation between data, logic, and presentation</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🧪</div>
+                        <div class="benefit-title">Testability</div>
+                        <div class="benefit-description">Easy to unit test individual components</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔧</div>
+                        <div class="benefit-title">Maintainability</div>
+                        <div class="benefit-description">Easier to maintain and extend codebase</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">👥</div>
+                        <div class="benefit-title">Team Collaboration</div>
+                        <div class="benefit-description">Multiple developers can work on different layers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/exercise5.js"></script>
+    </body>
+</html>
