@@ -1,5 +1,5 @@
 // Exercise 8: eCommerce API
-// This file handles the frontend interactions with the eCommerce API
+// This file handles the portfolio interactions with the eCommerce API
 
 class Exercise8 {
   constructor() {

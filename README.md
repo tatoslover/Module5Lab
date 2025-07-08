@@ -2,16 +2,17 @@
 
 ## Table of Contents
 
-1. [Setup](#setup)
-2. [Exercise 1: Multiple Web Servers](#exercise-1-multiple-web-servers)
+1. [🧮 Calculator Evolution Journey](#calculator-evolution-journey) - **NEW FEATURE**
+2. [Setup](#setup)
+3. [Exercise 1: Multiple Web Servers](#exercise-1-multiple-web-servers)
    - [Running the Servers](#running-the-servers)
    - [Server Details](#server-details)
    - [Testing](#testing)
-3. [Exercise 2: Calculator API](#exercise-2-calculator-api)
+4. [Exercise 2: Calculator API](#exercise-2-calculator-api)
    - [Running the Calculator API](#running-the-calculator-api)
    - [API Endpoints](#api-endpoints)
    - [Testing](#testing-1)
-4. [Exercise 3: Calculator Frontend Interface](#exercise-3-calculator-frontend-interface)
+4. [Exercise 3: Calculator Portfolio Interface](#exercise-3-calculator-portfolio-interface)
    - [Running Exercise 3](#running-exercise-3)
    - [Features](#features)
    - [Available Operations](#available-operations)
@@ -47,6 +48,63 @@
    - [API Endpoints](#api-endpoints-3)
 8. [Exercise 7](#exercise-7-to-be-completed)
 9. [Exercise 8](#exercise-8-to-be-completed)
+
+---
+
+## 🧮 Calculator Evolution Journey
+
+### **NEW FEATURE: Combined Calculator Progression**
+
+Experience the complete evolution of a calculator application from basic API to enterprise-grade solution in a single, cohesive demonstration.
+
+**Access:** [portfolio/calculator-progression.html](portfolio/calculator-progression.html)
+
+#### **The Four Stages:**
+
+1. **Stage 1: Basic Calculator API** (Exercise 2)
+   - Simple REST endpoints for mathematical operations
+   - Raw API testing interface
+   - JSON response visualization
+   - Basic error handling
+
+2. **Stage 2: Interactive Frontend** (Exercise 3)
+   - User-friendly calculator interface
+   - Real-time API integration
+   - Enhanced error handling and loading states
+   - Responsive design with animations
+
+3. **Stage 3: Professional Testing** (Exercise 6)
+   - Comprehensive Jest test suite
+   - Live test execution display
+   - Coverage reporting visualization
+   - Unit and integration testing
+
+4. **Stage 4: Enterprise Features** (Exercise 7)
+   - Advanced mathematical operations
+   - Custom calculator library with chaining
+   - Session management with unique IDs
+   - Structured logging with real-time display
+   - Professional error handling
+
+#### **Key Features:**
+
+- **Interactive Timeline Navigation** - Click or use number keys (1-4) to jump between stages
+- **Progressive Enhancement** - See how complexity increases step by step
+- **Live Demonstrations** - Working calculator at each stage
+- **Code Architecture Evolution** - Understand professional development patterns
+- **Offline Mode Support** - Works even when API server is unavailable
+- **Keyboard Shortcuts** - Press Enter to calculate, number keys for navigation
+- **Real-time Logging** - See structured application logs in Stage 4
+
+#### **Usage:**
+
+1. Navigate to the calculator progression page
+2. Use the timeline to explore each stage
+3. Try calculations at each stage to see the evolution
+4. Compare the increasing sophistication of features
+5. View live logs and test execution
+
+This combined view demonstrates how professional web applications evolve from simple concepts to production-ready systems, making it an excellent learning tool and portfolio showcase.
 
 ---
 
@@ -134,7 +192,7 @@ Visit the calculator API:
 
 ---
 
-## Exercise 3: Calculator Frontend Interface
+## Exercise 3: Calculator Portfolio Interface
 
 **Exercise Question:** Extend your calculator.html so that it allows the user to access all 4 server-side calculator routes from Exercise 2 (Add, Multiply, Divide, Subtract) via a basic front-end calculator interface.
 
@@ -147,9 +205,9 @@ This exercise extends the calculator.html to create a full front-end calculator 
 npm run calculator  # Runs on port 3004
 ```
 
-**Step 2: Start the Frontend Server (in another terminal)**
+**Step 2: Start the Portfolio Server (in another terminal)**
 ```bash
-npm run frontend  # Runs on port 3005
+npm run portfolio  # Runs on port 3005
 ```
 
 ### Features
@@ -184,7 +242,7 @@ npm run frontend  # Runs on port 3005
 
 ### Architecture
 
-- **Frontend Server:** Express.js serving static HTML/CSS/JS (Port 3005)
+- **Portfolio Server:** Express.js serving static HTML/CSS/JS (Port 3005)
 - **Calculator API:** Backend calculator service (Port 3004)
 - **API Communication:** Fetch API calls to localhost:3004/calculator/[operation]
 

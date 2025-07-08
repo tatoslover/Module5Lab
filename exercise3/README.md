@@ -1,4 +1,4 @@
-# Exercise 3: Calculator Frontend Interface
+# Exercise 3: Calculator Portfolio Interface
 
 This exercise extends the calculator.html from Module5Code to create a full front-end calculator interface that connects to all four server-side calculator routes from Exercise 2.
 
@@ -12,10 +12,10 @@ cd IOD/Module5Lab
 npm run calculator
 ```
 
-**Terminal 2 - Start the Frontend:**
+**Terminal 2 - Start the Portfolio:**
 ```bash
 cd IOD/Module5Lab  
-npm run frontend
+npm run portfolio
 ```
 
 **Terminal 3 - Open Browser:**
@@ -35,21 +35,21 @@ npm run calculator &
 # Wait a moment for API to start
 sleep 2
 
-# Start frontend
-npm run frontend
+# Start portfolio
+npm run portfolio
 ```
 
 ## What You'll See
 
 1. **Modern Calculator Interface** at http://localhost:3005
 2. **API Backend** running at http://localhost:3004
-3. **Real-time calculations** connecting frontend to backend
+3. **Real-time calculations** connecting portfolio to backend
 
 ## Architecture
 
 ```
 ┌─────────────────┐    HTTP Requests    ┌─────────────────┐
-│   Frontend      │ ──────────────────▶ │  Calculator API │
+│   Portfolio     │ ──────────────────▶ │  Calculator API │
 │   (Port 3005)   │                     │   (Port 3004)   │
 │                 │ ◀────────────────── │                 │
 │ calculator.html │    JSON Responses   │ Express Routes  │
@@ -102,14 +102,14 @@ npm run frontend
 
 ```
 exercise3/
-├── calculator.html     # Frontend interface with all operations
+├── calculator.html     # Portfolio interface with all operations
 ├── server.js          # Express server to serve the HTML
 └── README.md          # This file
 ```
 
 ## API Endpoints Used
 
-The frontend makes calls to these Exercise 2 endpoints:
+The portfolio makes calls to these Exercise 2 endpoints:
 
 - `GET http://localhost:3004/calculator/add?num1=X&num2=Y`
 - `GET http://localhost:3004/calculator/subtract?num1=X&num2=Y`  
@@ -118,7 +118,7 @@ The frontend makes calls to these Exercise 2 endpoints:
 
 ## Success Criteria
 
-✅ Frontend displays modern calculator interface  
+✅ Portfolio displays modern calculator interface  
 ✅ All four operations work correctly  
 ✅ Error handling for invalid inputs  
 ✅ Real-time communication with Exercise 2 API  

@@ -22,7 +22,7 @@ exercise8/
 ├── app.js                           # Main Express application (Port 3010)
 ├── package.json                     # Dependencies and scripts
 ├── public/
-│   └── index.html                  # eCommerce frontend (adapted from Module 4)
+│   └── index.html                  # eCommerce portfolio (adapted from Module 4)
 ├── controllers/
 │   └── storeController.js          # Business logic for store operations
 ├── routes/
@@ -125,8 +125,8 @@ servers:
 
 ## 🛍️ Part 2: eCommerce Store Backend
 
-### Frontend Integration
-The eCommerce frontend (`/public/index.html`) is adapted from Module 4 Lab10.html with:
+### Portfolio Integration
+The eCommerce portfolio (`/public/index.html`) is adapted from Module 4 Lab10.html with:
 
 - **Backend Integration:** All API calls now go to local Express backend
 - **Clean 4x5 Grid Layout:** Bootstrap grid displaying 20 products in 4 columns
@@ -134,7 +134,7 @@ The eCommerce frontend (`/public/index.html`) is adapted from Module 4 Lab10.htm
 - **Cache Integration:** Visual indicators when data is served from cache
 - **Responsive Design:** Bootstrap 5 with modern UI components
 
-### Frontend Improvements Made
+### Portfolio Improvements Made
 - **Removed Show All dropdown** - Simplified from 4 controls to 3 clean filter options
 - **Fixed Bootstrap Grid Layout** - Changed to `col-md-3` for consistent 4-column responsive grid
 - **Lab10.html Integration** - Adopted the clean card design and layout from Module 4
@@ -256,9 +256,9 @@ fetchWithCache(url, cacheKey) {
 }
 ```
 
-### Frontend-Backend Integration
+### Portfolio-Backend Integration
 ```javascript
-// Frontend API calls to local backend
+// Portfolio API calls to local backend
 const API_BASE_URL = '/api';
 
 // Load products from local backend
@@ -283,7 +283,7 @@ if (result.cached) {
 - ✅ Input validation and error handling
 
 **Integration Tests (storeRoutes.test.js) - 8 tests**
-- ✅ Basic endpoints (health, frontend, swagger docs)
+- ✅ Basic endpoints (health, portfolio, swagger docs)
 - ✅ API validation (invalid IDs, limits, queries)
 - ✅ Error handling (404s, malformed requests)
 - ✅ Cache management endpoints
@@ -377,8 +377,8 @@ curl -X POST "http://localhost:3010/api/cache/clear" \
 - ✅ Schema definitions and validation
 - ✅ Multiple server configurations
 
-### Frontend Integration
-- ✅ SPA-style frontend development
+### Portfolio Integration
+- ✅ SPA-style portfolio development
 - ✅ API integration and error handling
 - ✅ Modern JavaScript (async/await, fetch)
 - ✅ Responsive UI with Bootstrap
@@ -427,7 +427,7 @@ Exercise 8 builds upon and integrates knowledge from all previous exercises:
 
 - **Exercise 1:** Multiple server architecture understanding
 - **Exercise 2:** Basic Express.js and routing
-- **Exercise 3:** Frontend-backend integration
+- **Exercise 3:** Portfolio-backend integration
 - **Exercise 4:** Advanced routing and validation
 - **Exercise 5:** MVC architecture patterns
 - **Exercise 6:** Comprehensive testing strategies

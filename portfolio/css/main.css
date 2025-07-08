@@ -54,7 +54,8 @@ body {
 
 .exercises-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 30px;
     margin-bottom: 50px;
     align-items: stretch;
@@ -102,6 +103,64 @@ body {
     line-height: 30px;
     font-size: 0.8em;
     margin-right: 10px;
+}
+
+.exercise-card.featured {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: 3px solid #ffd700;
+    position: relative;
+    overflow: hidden;
+}
+
+.exercise-card.featured::before {
+    content: "✨ NEW";
+    position: absolute;
+    top: 15px;
+    right: -25px;
+    background: #ffd700;
+    color: #333;
+    padding: 5px 30px;
+    font-size: 0.8em;
+    font-weight: bold;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.exercise-card.featured h3 {
+    color: white;
+    font-size: 1.6em;
+}
+
+.exercise-card.featured h3::before {
+    background: #ffd700;
+    color: #333;
+    font-size: 1em;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+}
+
+.exercise-card.featured p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.exercise-card.featured .features li {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.exercise-card.featured .btn {
+    background: #ffd700;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 15px 25px;
+}
+
+.exercise-card.featured .btn:hover {
+    background: #ffed4a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
 }
 
 .exercise-card p {
@@ -296,6 +355,7 @@ body {
 
     .exercises-grid {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
     }
 
     .container {

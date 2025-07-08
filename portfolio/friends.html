@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Friends</title>
+        <link rel="stylesheet" href="css/friends.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG3HuBlAUw3Wu-46hoogyANMHo1VC-tKnE1Q&s"
+                        alt="IOD Logo"
+                        class="header-logo"
+                    />Friends
+                </h1>
+
+                <p>
+                    Watch how a REST API evolves from basic CRUD operations to
+                    professional MVC architecture
+                </p>
+            </div>
+
+            <div class="home-nav">
+                <a href="index.html" class="btn">🏠 Home</a>
+            </div>
+
+            <!-- Navigation Timeline -->
+            <nav class="timeline-nav">
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-stages">
+                        <div class="stage-marker active" data-stage="basic-api">
+                            <div class="marker-circle">1</div>
+                            <div class="marker-label">Basic API (Lab 4)</div>
+                        </div>
+                        <div class="stage-marker" data-stage="mvc-arch">
+                            <div class="marker-circle">2</div>
+                            <div class="marker-label">
+                                MVC Architecture (Lab 5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Stage 1: Basic API -->
+            <div class="stage-content active" id="basic-api">
+                <div class="stage-header">
+                    <h2>🚀 Stage 1: Basic Friends API</h2>
+                    <p>
+                        A simple REST API with CRUD operations and basic
+                        filtering capabilities
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>CRUD Operations</h3>
+                        <p>Create, Read, Update, Delete friends data</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Filtering</h3>
+                        <p>Filter by gender and search by name</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎲</div>
+                        <h3>Random Friend</h3>
+                        <p>Get a random friend from the database</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Statistics</h3>
+                        <p>View database statistics and analytics</p>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <div class="controls-panel">
+                        <h3>🔍 API Controls</h3>
+
+                        <div class="filter-section">
+                            <h4>Filter Friends</h4>
+                            <div class="filter-controls">
+                                <div class="filter-group">
+                                    <label for="genderFilter1">Gender:</label>
+                                    <select id="genderFilter1">
+                                        <option value="">All Genders</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="non-binary">
+                                            Non-Binary
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="nameFilter1"
+                                        >Name starts with:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="nameFilter1"
+                                        placeholder="Enter letter or name"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button
+                                class="btn btn-primary"
+                                onclick="loadAllFriends('basic')"
+                            >
+                                👥 Load All Friends
+                            </button>
+                            <button
+                                class="btn btn-success"
+                                onclick="applyFilters('basic')"
+                            >
+                                🔍 Apply Filters
+                            </button>
+                            <button
+                                class="btn btn-info"
+                                onclick="loadApiInfo('basic')"
+                            >
+                                ℹ️ API Info
+                            </button>
+                            <button
+                                class="btn btn-warning"
+                                onclick="loadRandomFriend('basic')"
+                            >
+                                🎲 Random Friend
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="friends-panel">
+                        <h3>
+                            <span class="status-indicator"></span>
+                            Friends Database
+                            <span id="friendsCount1" class="count-badge"></span>
+                        </h3>
+
+                        <div id="friendsContainer1">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>Loading friends...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <h3>📊 Basic API Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalFriends1">0</div>
+                            <div class="stat-label">Total Friends</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="maleCount1">0</div>
+                            <div class="stat-label">Male</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="femaleCount1">0</div>
+                            <div class="stat-label">Female</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="averageAge1">0</div>
+                            <div class="stat-label">Avg Age</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 2: MVC Architecture -->
+            <div class="stage-content" id="mvc-arch">
+                <div class="stage-header">
+                    <h2>🏛️ Stage 2: MVC Architecture</h2>
+                    <p>
+                        Enhanced API with professional Model-View-Controller
+                        architecture pattern
+                    </p>
+                </div>
+
+                <div class="architecture-info">
+                    <h3>🏗️ MVC Architecture Overview</h3>
+                    <div class="mvc-diagram">
+                        <div class="mvc-component model">
+                            <h4>📊 Model</h4>
+                            <p>Data structure and business logic</p>
+                            <ul>
+                                <li>Friend data management</li>
+                                <li>Data validation</li>
+                                <li>Business rules</li>
+                            </ul>
+                        </div>
+                        <div class="mvc-component view">
+                            <h4>👁️ View</h4>
+                            <p>User interface and presentation</p>
+                            <ul>
+                                <li>JSON responses</li>
+                                <li>Data formatting</li>
+                                <li>Error messages</li>
+                            </ul>
+                        </div>
+                        <div class="mvc-component controller">
+                            <h4>🎛️ Controller</h4>
+                            <p>Request handling and coordination</p>
+                            <ul>
+                                <li>Route handling</li>
+                                <li>Input validation</li>
+                                <li>Model coordination</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Separation of Concerns</h3>
+                        <p>
+                            Clean separation between data, logic, and
+                            presentation
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧪</div>
+                        <h3>Testability</h3>
+                        <p>Easy to unit test individual components</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Maintainability</h3>
+                        <p>Easier to maintain and extend codebase</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Team Collaboration</h3>
+                        <p>Multiple developers can work on different layers</p>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <div class="controls-panel">
+                        <h3>🔧 MVC API Controls</h3>
+
+                        <div class="endpoint-section">
+                            <h4>Available Endpoints</h4>
+                            <div class="endpoint-list">
+                                <div class="endpoint-item">
+                                    <span class="method get">GET</span>
+                                    <span class="path">/friends</span>
+                                    <span class="description"
+                                        >Get all friends</span
+                                    >
+                                </div>
+                                <div class="endpoint-item">
+                                    <span class="method get">GET</span>
+                                    <span class="path">/friends/:id</span>
+                                    <span class="description"
+                                        >Get friend by ID</span
+                                    >
+                                </div>
+                                <div class="endpoint-item">
+                                    <span class="method post">POST</span>
+                                    <span class="path">/friends</span>
+                                    <span class="description"
+                                        >Add new friend</span
+                                    >
+                                </div>
+                                <div class="endpoint-item">
+                                    <span class="method put">PUT</span>
+                                    <span class="path">/friends/:id</span>
+                                    <span class="description"
+                                        >Update friend</span
+                                    >
+                                </div>
+                                <div class="endpoint-item">
+                                    <span class="method delete">DELETE</span>
+                                    <span class="path">/friends/:id</span>
+                                    <span class="description"
+                                        >Delete friend</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-section">
+                            <h4>Filter Friends</h4>
+                            <div class="filter-controls">
+                                <div class="filter-group">
+                                    <label for="genderFilter2">Gender:</label>
+                                    <select id="genderFilter2">
+                                        <option value="">All Genders</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="non-binary">
+                                            Non-Binary
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="nameFilter2"
+                                        >Name contains:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="nameFilter2"
+                                        placeholder="Enter name to search"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button
+                                class="btn btn-primary"
+                                onclick="loadAllFriends('mvc')"
+                            >
+                                👥 Load All Friends
+                            </button>
+                            <button
+                                class="btn btn-success"
+                                onclick="applyFilters('mvc')"
+                            >
+                                🔍 Apply Filters
+                            </button>
+                            <button
+                                class="btn btn-info"
+                                onclick="loadApiInfo('mvc')"
+                            >
+                                📊 API Architecture
+                            </button>
+                            <button
+                                class="btn btn-warning"
+                                onclick="loadRandomFriend('mvc')"
+                            >
+                                🎲 Random Friend
+                            </button>
+                            <button
+                                class="btn btn-purple"
+                                onclick="showAddFriendForm()"
+                            >
+                                ➕ Add Friend
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="content-panel">
+                        <h3>
+                            <span class="status-indicator"></span>
+                            MVC Friends Database
+                            <span id="friendsCount2" class="count-badge"></span>
+                        </h3>
+
+                        <div id="friendsContainer2">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>Loading MVC architecture...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benefits-section">
+                    <h3>📈 MVC Architecture Benefits</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🔄</div>
+                            <div class="benefit-title">
+                                Separation of Concerns
+                            </div>
+                            <div class="benefit-description">
+                                Clean separation between data, logic, and
+                                presentation
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🧪</div>
+                            <div class="benefit-title">Testability</div>
+                            <div class="benefit-description">
+                                Easy to unit test individual components
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🔧</div>
+                            <div class="benefit-title">Maintainability</div>
+                            <div class="benefit-description">
+                                Easier to maintain and extend codebase
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">👥</div>
+                            <div class="benefit-title">Team Collaboration</div>
+                            <div class="benefit-description">
+                                Multiple developers can work on different layers
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Friend Modal -->
+            <div class="add-friend-modal" id="addFriendModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>➕ Add New Friend</h3>
+                        <button
+                            class="close-btn"
+                            onclick="closeAddFriendForm()"
+                        >
+                            &times;
+                        </button>
+                    </div>
+                    <form id="addFriendForm">
+                        <div class="form-group">
+                            <label for="friendName">Name:</label>
+                            <input type="text" id="friendName" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="friendAge">Age:</label>
+                            <input
+                                type="number"
+                                id="friendAge"
+                                min="1"
+                                max="120"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="friendGender">Gender:</label>
+                            <select id="friendGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="non-binary">Non-Binary</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="friendEmail">Email:</label>
+                            <input type="email" id="friendEmail" required />
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">
+                                Add Friend
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                onclick="closeAddFriendForm()"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>Samuel Love 2025</p>
+                <p>Web Development Portfolio</p>
+                <a
+                    href="https://github.com/tatoslover/Module5Lab"
+                    class="github-link"
+                    target="_blank"
+                >
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+
+        <script src="js/friends.js"></script>
+    </body>
+</html>

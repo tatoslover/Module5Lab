@@ -18,9 +18,9 @@ app.get("/", (req, res) => {
 app.get("/health", (req, res) => {
   res.json({
     status: "healthy",
-    server: "Exercise 3 - Calculator Frontend",
+    server: "Exercise 3 - Calculator Portfolio",
     port: PORT,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -28,14 +28,14 @@ app.get("/health", (req, res) => {
 app.use("*", (req, res) => {
   res.status(404).json({
     error: "Route not found",
-    server: "Calculator Frontend",
+    server: "Calculator Portfolio",
     port: PORT,
-    message: "Only the calculator interface is available at /"
+    message: "Only the calculator interface is available at /",
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`🌐 Calculator Frontend is running on http://localhost:${PORT}`);
+  console.log(`🌐 Calculator Portfolio is running on http://localhost:${PORT}`);
   console.log(`📱 Open your browser and visit: http://localhost:${PORT}`);
   console.log(`⚠️  Make sure Exercise 2 API is running on port 3004!`);
   console.log(`   Run: npm run calculator (in another terminal)`);
