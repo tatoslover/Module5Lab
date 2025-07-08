@@ -35,6 +35,21 @@
   to = "/.netlify/functions/friends"
   status = 200
 
+[[redirects]]
+  from = "/api/server1/*"
+  to = "/.netlify/functions/servers/server1/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/server2/*"
+  to = "/.netlify/functions/servers/server2/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/server3/*"
+  to = "/.netlify/functions/servers/server3/:splat"
+  status = 200
+
 # SPA fallback for client-side routing
 [[redirects]]
   from = "/*"

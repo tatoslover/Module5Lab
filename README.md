@@ -65,6 +65,8 @@ npm run kill-ports
 
 ## Exercise 1: Multiple Web Servers
 
+**Exercise Question:** Create a basic back-end application with multiple web servers running on different ports.
+
 This exercise demonstrates running multiple Express.js servers on different ports simultaneously.
 
 ### Running the Servers
@@ -102,7 +104,9 @@ Use tools like Postman or curl to test POST endpoints.
 
 ## Exercise 2: Calculator API
 
-Based on the 'add' route demonstrated in Module5Code, this exercise creates routes for all four core mathematical operations: add, subtract, multiply, and divide.
+**Exercise Question:** Based on the 'add' route demonstrated in the slides, create routes for 'subtract', 'divide', and 'multiply' to manage the four core mathematical operations.
+
+This exercise creates routes for all four core mathematical operations: add, subtract, multiply, and divide.
 
 ### Running the Calculator API
 
@@ -132,7 +136,9 @@ Visit the calculator API:
 
 ## Exercise 3: Calculator Frontend Interface
 
-Extends the calculator.html from Module5Code to create a full front-end calculator interface that connects to all four server-side calculator routes from Exercise 2.
+**Exercise Question:** Extend your calculator.html so that it allows the user to access all 4 server-side calculator routes from Exercise 2 (Add, Multiply, Divide, Subtract) via a basic front-end calculator interface.
+
+This exercise extends the calculator.html to create a full front-end calculator interface that connects to all four server-side calculator routes from Exercise 2.
 
 ### Running Exercise 3
 
@@ -186,7 +192,16 @@ npm run frontend  # Runs on port 3005
 
 ## Exercise 4: Friends API with Advanced Routing
 
-Modifies the provided friendRoutes.js template to implement 4 advanced routing features with proper validation and error handling.
+**Exercise Question:** Use the Express App template in Exercise4/m5lab4_expressapp from Google Drive. The friendRoutes.js file details 4 tasks to give more understanding on setting up different types of requests via routes:
+
+- **Part 1:** Add support to the 'filter' endpoint for a new query parameter 'letter' which filters friends by starting letter
+- **Part 2:** Modify the 'info' route to only return the user-agent, content-type and accept header data
+- **Part 3:** Modify the dynamic GET route to return a single friend object matching the dynamic 'id' request parameter
+- **Part 4:** Complete the PUT route which will update data for an existing friend
+
+Test each of the above with different values, and include some basic data validation.
+
+This exercise implements 4 advanced routing features with proper validation and error handling.
 
 ### Running Exercise 4
 
@@ -280,7 +295,9 @@ The API includes 6 Friends characters:
 
 ## Exercise 5: Friends API with MVC Architecture
 
-Expands on Exercise 4 by refactoring the application to use the Model-View-Controller (MVC) pattern, separating business logic into controllers for better code organization and maintainability.
+**Exercise Question:** Expand on the previous exercises and update your application to use controllers instead.
+
+This exercise expands on Exercise 4 by refactoring the application to use the Model-View-Controller (MVC) pattern, separating business logic into controllers for better code organization and maintainability.
 
 ### Running Exercise 5
 
@@ -402,7 +419,9 @@ curl -X PUT \
 
 ## Exercise 6: Calculator API with Unit Tests
 
-Adds comprehensive unit tests for all calculator operations, ensuring all routes work successfully and return expected responses. This exercise demonstrates professional testing practices with Jest framework.
+**Exercise Question:** Add unit tests for each of the calculator operations, and run them to ensure all routes are working successfully and returning the expected response.
+
+This exercise adds comprehensive unit tests for all calculator operations, ensuring all routes work successfully and return expected responses. It demonstrates professional testing practices with Jest framework.
 
 ### Running Exercise 6
 
@@ -546,6 +565,11 @@ All calculator operations with comprehensive test coverage:
 ---
 
 ## Exercise 7: Enhanced Calculator API with Libraries
+
+**Exercise Question:** 
+- **Part 1:** Expand your application to use a Calculator library that takes care of the calculations and integrate it in your code.
+- **Part 2:** Change the library so that you can generate a random number to be used as the ID, instead of the time. This way it will be almost impossible to have two of the same objects with the same ID.
+- **Part 3:** Create a generic library for logging - pass a message to be logged, this will contain at least the ID of the caller, and the result. Log to the console every call made.
 
 This exercise demonstrates advanced software architecture with a Calculator library, secure ID generation, and a comprehensive generic logging system.
 
@@ -912,4 +936,10 @@ appLogger.logSessionEnd('CALCULATION_SESSION', {
 
 This exercise demonstrates professional software engineering practices with secure ID generation, comprehensive logging, and robust library architecture suitable for production applications.
 
-## Exercise 8: [To be completed]
+## Exercise 8: eCommerce API with Swagger Documentation
+
+**Exercise Question:**
+- **Part 1:** Write the Swagger specification for your entire project so far!
+- **Part 2:** Final Module Project - Using what you learnt in this module, recreate the Fake eCommerce Store that you have created in Module 4. Move your front-end files to the public folder, and create an Express back-end to handle all third-party data fetching using axios. Your front end should then fetch from your back-end instead of the fake store API directly. Make sure to make a clean MVC Structure and use Swagger to test things out, and make a documentation that is easy to read and test.
+
+This exercise creates a comprehensive eCommerce API with proper documentation and MVC architecture.
