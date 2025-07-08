@@ -1,0 +1,36 @@
+{
+  "name": "exercise8-ecommerce-api",
+  "version": "1.0.0",
+  "description": "Exercise 8: Swagger Documentation and eCommerce Store API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0",
+    "axios": "^1.5.0",
+    "swagger-ui-express": "^5.0.0",
+    "swagger-jsdoc": "^6.2.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.6.2",
+    "supertest": "^6.3.3"
+  },
+  "keywords": [
+    "express",
+    "nodejs",
+    "ecommerce",
+    "api",
+    "swagger",
+    "documentation"
+  ],
+  "author": "Samuel Love <samuelwelove@icloud.com>",
+  "license": "MIT"
+}

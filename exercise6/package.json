@@ -1,0 +1,49 @@
+{
+  "name": "exercise6-calculator-tests",
+  "version": "1.0.0",
+  "description": "Exercise 6 - Calculator API with Unit Tests",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose"
+  },
+  "keywords": [
+    "express",
+    "nodejs",
+    "calculator",
+    "api",
+    "testing",
+    "jest",
+    "unit-tests"
+  ],
+  "author": "Samuel Love",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "supertest": "^6.3.3",
+    "nodemon": "^3.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
+    "testMatch": ["**/tests/**/*.test.js"],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "controllers/**/*.js",
+      "libraries/**/*.js",
+      "routes/**/*.js",
+      "!**/node_modules/**",
+      "!**/tests/**"
+    ],
+    "verbose": true
+  }
+}

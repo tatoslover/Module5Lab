@@ -1,0 +1,29 @@
+{
+  "name": "exercise5-friends-api-mvc",
+  "version": "1.0.0",
+  "description": "Exercise 5 - Friends API with MVC Architecture",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "nodejs",
+    "mvc",
+    "api",
+    "friends",
+    "controller",
+    "routes"
+  ],
+  "author": "Samuel Love",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
