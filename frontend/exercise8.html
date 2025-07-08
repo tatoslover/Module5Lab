@@ -9,21 +9,21 @@
     <body>
         <div class="container">
             <div class="header">
-                <h1>🛒 eCommerce API</h1>
+                <h1>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG3HuBlAUw3Wu-46hoogyANMHo1VC-tKnE1Q&s"
+                        alt="IOD Logo"
+                        class="header-logo"
+                    />eCommerce API
+                </h1>
                 <p>
-                    Full-featured eCommerce API with product management, order processing, and Swagger documentation
+                    Full-featured eCommerce API with product management, order
+                    processing, and Swagger documentation
                 </p>
             </div>
 
-            <div class="nav">
-                <a href="index.html">← Back to Home</a>
-                <a href="exercise7.html">Previous: Enhanced Calculator</a>
-                <a href="#" onclick="openSwaggerDocs()">📖 Swagger Docs</a>
-                <a
-                    href="https://github.com/samuellove/Module5Lab/tree/main/exercise8"
-                    target="_blank"
-                    >GitHub</a
-                >
+            <div class="home-nav">
+                <a href="index.html" class="btn">🏠 Home</a>
             </div>
 
             <div class="api-overview">
@@ -31,7 +31,10 @@
                 <div class="features-grid">
                     <div class="feature-card products">
                         <h3>📦 Product Management</h3>
-                        <p>Complete product catalog with categories and inventory</p>
+                        <p>
+                            Complete product catalog with categories and
+                            inventory
+                        </p>
                         <ul>
                             <li>Product CRUD operations</li>
                             <li>Category management</li>
@@ -77,26 +80,58 @@
                     <h2>🎮 API Controls</h2>
 
                     <div class="control-tabs">
-                        <button class="tab-btn active" onclick="showControlTab('products')">📦 Products</button>
-                        <button class="tab-btn" onclick="showControlTab('orders')">📋 Orders</button>
-                        <button class="tab-btn" onclick="showControlTab('users')">👥 Users</button>
-                        <button class="tab-btn" onclick="showControlTab('analytics')">📊 Analytics</button>
+                        <button
+                            class="tab-btn active"
+                            onclick="showControlTab('products')"
+                        >
+                            📦 Products
+                        </button>
+                        <button
+                            class="tab-btn"
+                            onclick="showControlTab('orders')"
+                        >
+                            📋 Orders
+                        </button>
+                        <button
+                            class="tab-btn"
+                            onclick="showControlTab('users')"
+                        >
+                            👥 Users
+                        </button>
+                        <button
+                            class="tab-btn"
+                            onclick="showControlTab('analytics')"
+                        >
+                            📊 Analytics
+                        </button>
                     </div>
 
                     <div class="control-content">
                         <div id="products" class="control-tab active">
                             <h3>Product Management</h3>
                             <div class="control-buttons">
-                                <button class="btn btn-primary" onclick="loadAllProducts()">
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="loadAllProducts()"
+                                >
                                     📦 Load All Products
                                 </button>
-                                <button class="btn btn-success" onclick="addProductForm()">
+                                <button
+                                    class="btn btn-success"
+                                    onclick="addProductForm()"
+                                >
                                     ➕ Add Product
                                 </button>
-                                <button class="btn btn-info" onclick="loadCategories()">
+                                <button
+                                    class="btn btn-info"
+                                    onclick="loadCategories()"
+                                >
                                     🏷️ Categories
                                 </button>
-                                <button class="btn btn-warning" onclick="checkInventory()">
+                                <button
+                                    class="btn btn-warning"
+                                    onclick="checkInventory()"
+                                >
                                     📊 Inventory
                                 </button>
                             </div>
@@ -105,13 +140,28 @@
                                 <div class="filter-controls">
                                     <select id="categoryFilter">
                                         <option value="">All Categories</option>
-                                        <option value="electronics">Electronics</option>
-                                        <option value="clothing">Clothing</option>
+                                        <option value="electronics">
+                                            Electronics
+                                        </option>
+                                        <option value="clothing">
+                                            Clothing
+                                        </option>
                                         <option value="books">Books</option>
-                                        <option value="home">Home & Garden</option>
+                                        <option value="home">
+                                            Home & Garden
+                                        </option>
                                     </select>
-                                    <input type="text" id="productSearch" placeholder="Search products..." />
-                                    <button class="btn btn-small" onclick="applyProductFilters()">Filter</button>
+                                    <input
+                                        type="text"
+                                        id="productSearch"
+                                        placeholder="Search products..."
+                                    />
+                                    <button
+                                        class="btn btn-small"
+                                        onclick="applyProductFilters()"
+                                    >
+                                        Filter
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -119,16 +169,28 @@
                         <div id="orders" class="control-tab">
                             <h3>Order Management</h3>
                             <div class="control-buttons">
-                                <button class="btn btn-primary" onclick="loadAllOrders()">
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="loadAllOrders()"
+                                >
                                     📋 Load All Orders
                                 </button>
-                                <button class="btn btn-success" onclick="createTestOrder()">
+                                <button
+                                    class="btn btn-success"
+                                    onclick="createTestOrder()"
+                                >
                                     ➕ Create Test Order
                                 </button>
-                                <button class="btn btn-info" onclick="getOrderStats()">
+                                <button
+                                    class="btn btn-info"
+                                    onclick="getOrderStats()"
+                                >
                                     📈 Order Statistics
                                 </button>
-                                <button class="btn btn-warning" onclick="processPendingOrders()">
+                                <button
+                                    class="btn btn-warning"
+                                    onclick="processPendingOrders()"
+                                >
                                     ⚡ Process Pending
                                 </button>
                             </div>
@@ -138,13 +200,24 @@
                                     <select id="orderStatusFilter">
                                         <option value="">All Statuses</option>
                                         <option value="pending">Pending</option>
-                                        <option value="processing">Processing</option>
+                                        <option value="processing">
+                                            Processing
+                                        </option>
                                         <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="cancelled">Cancelled</option>
+                                        <option value="delivered">
+                                            Delivered
+                                        </option>
+                                        <option value="cancelled">
+                                            Cancelled
+                                        </option>
                                     </select>
                                     <input type="date" id="orderDateFilter" />
-                                    <button class="btn btn-small" onclick="applyOrderFilters()">Filter</button>
+                                    <button
+                                        class="btn btn-small"
+                                        onclick="applyOrderFilters()"
+                                    >
+                                        Filter
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -152,16 +225,28 @@
                         <div id="users" class="control-tab">
                             <h3>User Management</h3>
                             <div class="control-buttons">
-                                <button class="btn btn-primary" onclick="loadAllUsers()">
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="loadAllUsers()"
+                                >
                                     👥 Load All Users
                                 </button>
-                                <button class="btn btn-success" onclick="createTestUser()">
+                                <button
+                                    class="btn btn-success"
+                                    onclick="createTestUser()"
+                                >
                                     ➕ Create Test User
                                 </button>
-                                <button class="btn btn-info" onclick="getUserStats()">
+                                <button
+                                    class="btn btn-info"
+                                    onclick="getUserStats()"
+                                >
                                     📊 User Statistics
                                 </button>
-                                <button class="btn btn-purple" onclick="getShoppingCarts()">
+                                <button
+                                    class="btn btn-purple"
+                                    onclick="getShoppingCarts()"
+                                >
                                     🛒 Shopping Carts
                                 </button>
                             </div>
@@ -170,16 +255,28 @@
                         <div id="analytics" class="control-tab">
                             <h3>Analytics & Reports</h3>
                             <div class="control-buttons">
-                                <button class="btn btn-primary" onclick="getSalesReport()">
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="getSalesReport()"
+                                >
                                     📈 Sales Report
                                 </button>
-                                <button class="btn btn-success" onclick="getProductAnalytics()">
+                                <button
+                                    class="btn btn-success"
+                                    onclick="getProductAnalytics()"
+                                >
                                     📊 Product Analytics
                                 </button>
-                                <button class="btn btn-info" onclick="getCustomerAnalytics()">
+                                <button
+                                    class="btn btn-info"
+                                    onclick="getCustomerAnalytics()"
+                                >
                                     👥 Customer Analytics
                                 </button>
-                                <button class="btn btn-warning" onclick="getInventoryReport()">
+                                <button
+                                    class="btn btn-warning"
+                                    onclick="getInventoryReport()"
+                                >
                                     📦 Inventory Report
                                 </button>
                             </div>
@@ -195,25 +292,57 @@
                     </h2>
 
                     <div class="display-tabs">
-                        <button class="display-tab-btn active" onclick="showDisplayTab('grid')">🔲 Grid View</button>
-                        <button class="display-tab-btn" onclick="showDisplayTab('list')">📋 List View</button>
-                        <button class="display-tab-btn" onclick="showDisplayTab('json')">📄 JSON View</button>
-                        <button class="display-tab-btn" onclick="showDisplayTab('swagger')">📖 Swagger</button>
+                        <button
+                            class="display-tab-btn active"
+                            onclick="showDisplayTab('grid')"
+                        >
+                            🔲 Grid View
+                        </button>
+                        <button
+                            class="display-tab-btn"
+                            onclick="showDisplayTab('list')"
+                        >
+                            📋 List View
+                        </button>
+                        <button
+                            class="display-tab-btn"
+                            onclick="showDisplayTab('json')"
+                        >
+                            📄 JSON View
+                        </button>
+                        <button
+                            class="display-tab-btn"
+                            onclick="showDisplayTab('swagger')"
+                        >
+                            📖 Swagger
+                        </button>
                     </div>
 
                     <div id="displayContent">
                         <div id="grid" class="display-content active">
                             <div class="placeholder">
                                 <h3>🛒 Welcome to eCommerce API</h3>
-                                <p>Select an action from the controls to get started</p>
+                                <p>
+                                    Select an action from the controls to get
+                                    started
+                                </p>
                                 <div class="quick-actions">
-                                    <button class="btn btn-primary" onclick="loadAllProducts()">
+                                    <button
+                                        class="btn btn-primary"
+                                        onclick="loadAllProducts()"
+                                    >
                                         View Products
                                     </button>
-                                    <button class="btn btn-success" onclick="loadAllOrders()">
+                                    <button
+                                        class="btn btn-success"
+                                        onclick="loadAllOrders()"
+                                    >
                                         View Orders
                                     </button>
-                                    <button class="btn btn-info" onclick="openSwaggerDocs()">
+                                    <button
+                                        class="btn btn-info"
+                                        onclick="openSwaggerDocs()"
+                                    >
                                         API Documentation
                                     </button>
                                 </div>
@@ -228,7 +357,9 @@
 
                         <div id="json" class="display-content">
                             <div class="json-container">
-                                <pre id="jsonOutput">JSON data will appear here</pre>
+                                <pre id="jsonOutput">
+JSON data will appear here</pre
+                                >
                             </div>
                         </div>
 
@@ -236,9 +367,15 @@
                             <div class="swagger-container">
                                 <h3>📖 API Documentation</h3>
                                 <div class="swagger-info">
-                                    <p>Interactive Swagger documentation is available at:</p>
+                                    <p>
+                                        Interactive Swagger documentation is
+                                        available at:
+                                    </p>
                                     <div class="swagger-link">
-                                        <a href="http://localhost:3008/api-docs" target="_blank">
+                                        <a
+                                            href="http://localhost:3008/api-docs"
+                                            target="_blank"
+                                        >
                                             http://localhost:3008/api-docs
                                         </a>
                                     </div>
@@ -249,50 +386,98 @@
                                         <div class="endpoint-group">
                                             <h5>Products</h5>
                                             <div class="endpoint">
-                                                <span class="method get">GET</span>
-                                                <span class="path">/api/products</span>
-                                                <span class="description">Get all products</span>
+                                                <span class="method get"
+                                                    >GET</span
+                                                >
+                                                <span class="path"
+                                                    >/api/products</span
+                                                >
+                                                <span class="description"
+                                                    >Get all products</span
+                                                >
                                             </div>
                                             <div class="endpoint">
-                                                <span class="method get">GET</span>
-                                                <span class="path">/api/products/:id</span>
-                                                <span class="description">Get product by ID</span>
+                                                <span class="method get"
+                                                    >GET</span
+                                                >
+                                                <span class="path"
+                                                    >/api/products/:id</span
+                                                >
+                                                <span class="description"
+                                                    >Get product by ID</span
+                                                >
                                             </div>
                                             <div class="endpoint">
-                                                <span class="method post">POST</span>
-                                                <span class="path">/api/products</span>
-                                                <span class="description">Create new product</span>
+                                                <span class="method post"
+                                                    >POST</span
+                                                >
+                                                <span class="path"
+                                                    >/api/products</span
+                                                >
+                                                <span class="description"
+                                                    >Create new product</span
+                                                >
                                             </div>
                                         </div>
                                         <div class="endpoint-group">
                                             <h5>Orders</h5>
                                             <div class="endpoint">
-                                                <span class="method get">GET</span>
-                                                <span class="path">/api/orders</span>
-                                                <span class="description">Get all orders</span>
+                                                <span class="method get"
+                                                    >GET</span
+                                                >
+                                                <span class="path"
+                                                    >/api/orders</span
+                                                >
+                                                <span class="description"
+                                                    >Get all orders</span
+                                                >
                                             </div>
                                             <div class="endpoint">
-                                                <span class="method post">POST</span>
-                                                <span class="path">/api/orders</span>
-                                                <span class="description">Create new order</span>
+                                                <span class="method post"
+                                                    >POST</span
+                                                >
+                                                <span class="path"
+                                                    >/api/orders</span
+                                                >
+                                                <span class="description"
+                                                    >Create new order</span
+                                                >
                                             </div>
                                             <div class="endpoint">
-                                                <span class="method put">PUT</span>
-                                                <span class="path">/api/orders/:id</span>
-                                                <span class="description">Update order status</span>
+                                                <span class="method put"
+                                                    >PUT</span
+                                                >
+                                                <span class="path"
+                                                    >/api/orders/:id</span
+                                                >
+                                                <span class="description"
+                                                    >Update order status</span
+                                                >
                                             </div>
                                         </div>
                                         <div class="endpoint-group">
                                             <h5>Users</h5>
                                             <div class="endpoint">
-                                                <span class="method get">GET</span>
-                                                <span class="path">/api/users</span>
-                                                <span class="description">Get all users</span>
+                                                <span class="method get"
+                                                    >GET</span
+                                                >
+                                                <span class="path"
+                                                    >/api/users</span
+                                                >
+                                                <span class="description"
+                                                    >Get all users</span
+                                                >
                                             </div>
                                             <div class="endpoint">
-                                                <span class="method post">POST</span>
-                                                <span class="path">/api/users</span>
-                                                <span class="description">Create new user</span>
+                                                <span class="method post"
+                                                    >POST</span
+                                                >
+                                                <span class="path"
+                                                    >/api/users</span
+                                                >
+                                                <span class="description"
+                                                    >Create new user</span
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -307,7 +492,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3>➕ Add New Product</h3>
-                        <button class="close-btn" onclick="closeAddProductForm()">&times;</button>
+                        <button
+                            class="close-btn"
+                            onclick="closeAddProductForm()"
+                        >
+                            &times;
+                        </button>
                     </div>
                     <form id="addProductForm">
                         <div class="form-group">
@@ -326,19 +516,42 @@
                         </div>
                         <div class="form-group">
                             <label for="productPrice">Price ($):</label>
-                            <input type="number" id="productPrice" step="0.01" min="0" required />
+                            <input
+                                type="number"
+                                id="productPrice"
+                                step="0.01"
+                                min="0"
+                                required
+                            />
                         </div>
                         <div class="form-group">
                             <label for="productDescription">Description:</label>
-                            <textarea id="productDescription" rows="3" required></textarea>
+                            <textarea
+                                id="productDescription"
+                                rows="3"
+                                required
+                            ></textarea>
                         </div>
                         <div class="form-group">
                             <label for="productStock">Stock Quantity:</label>
-                            <input type="number" id="productStock" min="0" required />
+                            <input
+                                type="number"
+                                id="productStock"
+                                min="0"
+                                required
+                            />
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-success">Add Product</button>
-                            <button type="button" class="btn btn-secondary" onclick="closeAddProductForm()">Cancel</button>
+                            <button type="submit" class="btn btn-success">
+                                Add Product
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                onclick="closeAddProductForm()"
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -368,6 +581,18 @@
                         <div class="stat-label">Total Revenue</div>
                     </div>
                 </div>
+            </div>
+            <!-- Footer -->
+            <div class="footer">
+                <p>Samuel Love 2025</p>
+                <p>Web Development Portfolio</p>
+                <a
+                    href="https://github.com/tatoslover/Module5Lab"
+                    class="github-link"
+                    target="_blank"
+                >
+                    View on GitHub
+                </a>
             </div>
         </div>
 

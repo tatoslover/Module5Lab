@@ -9,21 +9,21 @@
     <body>
         <div class="container">
             <div class="header">
-                <h1>🧪 Calculator with Tests</h1>
+                <h1>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG3HuBlAUw3Wu-46hoogyANMHo1VC-tKnE1Q&s"
+                        alt="IOD Logo"
+                        class="header-logo"
+                    />Calculator with Tests
+                </h1>
                 <p>
-                    Professional calculator API with comprehensive unit and integration tests using Jest
+                    Professional calculator API with comprehensive unit and
+                    integration tests using Jest
                 </p>
             </div>
 
-            <div class="nav">
-                <a href="index.html">← Back to Home</a>
-                <a href="exercise5.html">Previous: MVC API</a>
-                <a href="exercise7.html">Next: Enhanced Calculator</a>
-                <a
-                    href="https://github.com/samuellove/Module5Lab/tree/main/exercise6"
-                    target="_blank"
-                    >GitHub</a
-                >
+            <div class="home-nav">
+                <a href="index.html" class="btn">🏠 Home</a>
             </div>
 
             <div class="testing-overview">
@@ -31,7 +31,9 @@
                 <div class="testing-grid">
                     <div class="test-type unit">
                         <h3>🧪 Unit Tests</h3>
-                        <p>Test individual functions and methods in isolation</p>
+                        <p>
+                            Test individual functions and methods in isolation
+                        </p>
                         <ul>
                             <li>Test all calculator operations</li>
                             <li>Edge case validation</li>
@@ -65,42 +67,155 @@
 
                     <div class="calculator">
                         <div class="display">
-                            <div class="operation-display" id="operationDisplay">Ready</div>
-                            <div class="result-display" id="resultDisplay">0</div>
+                            <div
+                                class="operation-display"
+                                id="operationDisplay"
+                            >
+                                Ready
+                            </div>
+                            <div class="result-display" id="resultDisplay">
+                                0
+                            </div>
                         </div>
 
                         <div class="calculator-grid">
-                            <button class="btn btn-clear" onclick="clearCalculator()">C</button>
-                            <button class="btn btn-operation" onclick="performOperation('sqrt')">√</button>
-                            <button class="btn btn-operation" onclick="performOperation('power')">x²</button>
-                            <button class="btn btn-operation" onclick="performOperation('divide')">÷</button>
+                            <button
+                                class="btn btn-clear"
+                                onclick="clearCalculator()"
+                            >
+                                C
+                            </button>
+                            <button
+                                class="btn btn-operation"
+                                onclick="performOperation('sqrt')"
+                            >
+                                √
+                            </button>
+                            <button
+                                class="btn btn-operation"
+                                onclick="performOperation('power')"
+                            >
+                                x²
+                            </button>
+                            <button
+                                class="btn btn-operation"
+                                onclick="performOperation('divide')"
+                            >
+                                ÷
+                            </button>
 
-                            <button class="btn btn-number" onclick="inputNumber('7')">7</button>
-                            <button class="btn btn-number" onclick="inputNumber('8')">8</button>
-                            <button class="btn btn-number" onclick="inputNumber('9')">9</button>
-                            <button class="btn btn-operation" onclick="performOperation('multiply')">×</button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('7')"
+                            >
+                                7
+                            </button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('8')"
+                            >
+                                8
+                            </button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('9')"
+                            >
+                                9
+                            </button>
+                            <button
+                                class="btn btn-operation"
+                                onclick="performOperation('multiply')"
+                            >
+                                ×
+                            </button>
 
-                            <button class="btn btn-number" onclick="inputNumber('4')">4</button>
-                            <button class="btn btn-number" onclick="inputNumber('5')">5</button>
-                            <button class="btn btn-number" onclick="inputNumber('6')">6</button>
-                            <button class="btn btn-operation" onclick="performOperation('subtract')">−</button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('4')"
+                            >
+                                4
+                            </button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('5')"
+                            >
+                                5
+                            </button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('6')"
+                            >
+                                6
+                            </button>
+                            <button
+                                class="btn btn-operation"
+                                onclick="performOperation('subtract')"
+                            >
+                                −
+                            </button>
 
-                            <button class="btn btn-number" onclick="inputNumber('1')">1</button>
-                            <button class="btn btn-number" onclick="inputNumber('2')">2</button>
-                            <button class="btn btn-number" onclick="inputNumber('3')">3</button>
-                            <button class="btn btn-operation" onclick="performOperation('add')">+</button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('1')"
+                            >
+                                1
+                            </button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('2')"
+                            >
+                                2
+                            </button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputNumber('3')"
+                            >
+                                3
+                            </button>
+                            <button
+                                class="btn btn-operation"
+                                onclick="performOperation('add')"
+                            >
+                                +
+                            </button>
 
-                            <button class="btn btn-number btn-zero" onclick="inputNumber('0')">0</button>
-                            <button class="btn btn-number" onclick="inputDecimal()">.</button>
-                            <button class="btn btn-equals" onclick="calculateResult()">=</button>
+                            <button
+                                class="btn btn-number btn-zero"
+                                onclick="inputNumber('0')"
+                            >
+                                0
+                            </button>
+                            <button
+                                class="btn btn-number"
+                                onclick="inputDecimal()"
+                            >
+                                .
+                            </button>
+                            <button
+                                class="btn btn-equals"
+                                onclick="calculateResult()"
+                            >
+                                =
+                            </button>
                         </div>
                     </div>
 
                     <div class="operation-buttons">
-                        <button class="btn btn-api" onclick="testAddition()">Test Addition</button>
-                        <button class="btn btn-api" onclick="testSubtraction()">Test Subtraction</button>
-                        <button class="btn btn-api" onclick="testMultiplication()">Test Multiplication</button>
-                        <button class="btn btn-api" onclick="testDivision()">Test Division</button>
+                        <button class="btn btn-api" onclick="testAddition()">
+                            Test Addition
+                        </button>
+                        <button class="btn btn-api" onclick="testSubtraction()">
+                            Test Subtraction
+                        </button>
+                        <button
+                            class="btn btn-api"
+                            onclick="testMultiplication()"
+                        >
+                            Test Multiplication
+                        </button>
+                        <button class="btn btn-api" onclick="testDivision()">
+                            Test Division
+                        </button>
                     </div>
                 </div>
 
@@ -118,10 +233,16 @@
                         <button class="btn btn-info" onclick="runUnitTests()">
                             🔬 Unit Tests
                         </button>
-                        <button class="btn btn-warning" onclick="runIntegrationTests()">
+                        <button
+                            class="btn btn-warning"
+                            onclick="runIntegrationTests()"
+                        >
                             🔗 Integration Tests
                         </button>
-                        <button class="btn btn-purple" onclick="getCoverageReport()">
+                        <button
+                            class="btn btn-purple"
+                            onclick="getCoverageReport()"
+                        >
                             📊 Coverage Report
                         </button>
                     </div>
@@ -129,7 +250,10 @@
                     <div id="testResultsContainer">
                         <div class="test-placeholder">
                             <h3>🧪 Test Environment Ready</h3>
-                            <p>Click "Run All Tests" to execute the complete test suite</p>
+                            <p>
+                                Click "Run All Tests" to execute the complete
+                                test suite
+                            </p>
                             <div class="test-features">
                                 <div class="feature-item">
                                     <span class="feature-icon">✓</span>
@@ -219,6 +343,18 @@
                         <div class="metric-label">Coverage</div>
                     </div>
                 </div>
+            </div>
+            <!-- Footer -->
+            <div class="footer">
+                <p>Samuel Love 2025</p>
+                <p>Web Development Portfolio</p>
+                <a
+                    href="https://github.com/tatoslover/Module5Lab"
+                    class="github-link"
+                    target="_blank"
+                >
+                    View on GitHub
+                </a>
             </div>
         </div>
 

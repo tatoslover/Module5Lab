@@ -9,21 +9,21 @@
     <body>
         <div class="container">
             <div class="header">
-                <h1>🏗️ Friends API - MVC Architecture</h1>
+                <h1>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG3HuBlAUw3Wu-46hoogyANMHo1VC-tKnE1Q&s"
+                        alt="IOD Logo"
+                        class="header-logo"
+                    />Friends API - MVC Architecture
+                </h1>
                 <p>
-                    Explore the Model-View-Controller architecture pattern with our enhanced Friends API
+                    Explore the Model-View-Controller architecture pattern with
+                    our enhanced Friends API
                 </p>
             </div>
 
-            <div class="nav">
-                <a href="index.html">← Back to Home</a>
-                <a href="exercise4.html">Previous: Friends API</a>
-                <a href="exercise6.html">Next: Calculator Tests</a>
-                <a
-                    href="https://github.com/samuellove/Module5Lab/tree/main/exercise5"
-                    target="_blank"
-                    >GitHub</a
-                >
+            <div class="home-nav">
+                <a href="index.html" class="btn">🏠 Home</a>
             </div>
 
             <div class="architecture-info">
@@ -74,7 +74,9 @@
                             <div class="endpoint-item">
                                 <span class="method get">GET</span>
                                 <span class="path">/friends/:id</span>
-                                <span class="description">Get friend by ID</span>
+                                <span class="description"
+                                    >Get friend by ID</span
+                                >
                             </div>
                             <div class="endpoint-item">
                                 <span class="method post">POST</span>
@@ -103,7 +105,9 @@
                                     <option value="">All Genders</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
-                                    <option value="non-binary">Non-Binary</option>
+                                    <option value="non-binary">
+                                        Non-Binary
+                                    </option>
                                 </select>
                             </div>
                             <div class="filter-group">
@@ -118,19 +122,31 @@
                     </div>
 
                     <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="loadAllFriends()">
+                        <button
+                            class="btn btn-primary"
+                            onclick="loadAllFriends()"
+                        >
                             👥 Load All Friends
                         </button>
-                        <button class="btn btn-success" onclick="applyFilters()">
+                        <button
+                            class="btn btn-success"
+                            onclick="applyFilters()"
+                        >
                             🔍 Apply Filters
                         </button>
                         <button class="btn btn-info" onclick="loadApiInfo()">
                             📊 API Architecture
                         </button>
-                        <button class="btn btn-warning" onclick="loadRandomFriend()">
+                        <button
+                            class="btn btn-warning"
+                            onclick="loadRandomFriend()"
+                        >
                             🎲 Random Friend
                         </button>
-                        <button class="btn btn-purple" onclick="showAddFriendForm()">
+                        <button
+                            class="btn btn-purple"
+                            onclick="showAddFriendForm()"
+                        >
                             ➕ Add Friend
                         </button>
                     </div>
@@ -156,7 +172,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3>➕ Add New Friend</h3>
-                        <button class="close-btn" onclick="closeAddFriendForm()">&times;</button>
+                        <button
+                            class="close-btn"
+                            onclick="closeAddFriendForm()"
+                        >
+                            &times;
+                        </button>
                     </div>
                     <form id="addFriendForm">
                         <div class="form-group">
@@ -165,7 +186,13 @@
                         </div>
                         <div class="form-group">
                             <label for="friendAge">Age:</label>
-                            <input type="number" id="friendAge" min="1" max="120" required />
+                            <input
+                                type="number"
+                                id="friendAge"
+                                min="1"
+                                max="120"
+                                required
+                            />
                         </div>
                         <div class="form-group">
                             <label for="friendGender">Gender:</label>
@@ -181,8 +208,16 @@
                             <input type="email" id="friendEmail" required />
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-success">Add Friend</button>
-                            <button type="button" class="btn btn-secondary" onclick="closeAddFriendForm()">Cancel</button>
+                            <button type="submit" class="btn btn-success">
+                                Add Friend
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                onclick="closeAddFriendForm()"
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -194,24 +229,45 @@
                     <div class="benefit-item">
                         <div class="benefit-icon">🔄</div>
                         <div class="benefit-title">Separation of Concerns</div>
-                        <div class="benefit-description">Clean separation between data, logic, and presentation</div>
+                        <div class="benefit-description">
+                            Clean separation between data, logic, and
+                            presentation
+                        </div>
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">🧪</div>
                         <div class="benefit-title">Testability</div>
-                        <div class="benefit-description">Easy to unit test individual components</div>
+                        <div class="benefit-description">
+                            Easy to unit test individual components
+                        </div>
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">🔧</div>
                         <div class="benefit-title">Maintainability</div>
-                        <div class="benefit-description">Easier to maintain and extend codebase</div>
+                        <div class="benefit-description">
+                            Easier to maintain and extend codebase
+                        </div>
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">👥</div>
                         <div class="benefit-title">Team Collaboration</div>
-                        <div class="benefit-description">Multiple developers can work on different layers</div>
+                        <div class="benefit-description">
+                            Multiple developers can work on different layers
+                        </div>
                     </div>
                 </div>
+            </div>
+            <!-- Footer -->
+            <div class="footer">
+                <p>Samuel Love 2025</p>
+                <p>Web Development Portfolio</p>
+                <a
+                    href="https://github.com/tatoslover/Module5Lab"
+                    class="github-link"
+                    target="_blank"
+                >
+                    View on GitHub
+                </a>
             </div>
         </div>
 

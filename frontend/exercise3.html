@@ -7,73 +7,99 @@
         <link rel="stylesheet" href="css/exercise3.css" />
     </head>
     <body>
-        <div class="calculator">
-            <h1>🧮 Full Calculator</h1>
-            <p style="text-align: center; color: #666; margin-bottom: 30px">
-                Connected to Exercise 2 Calculator API (Port 3004)
-            </p>
+        <div class="container">
+            <div class="header">
+                <h1>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG3HuBlAUw3Wu-46hoogyANMHo1VC-tKnE1Q&s"
+                        alt="IOD Logo"
+                        class="header-logo"
+                    />Full Calculator
+                </h1>
 
-            <div class="input-group">
-                <label for="num1">First Number:</label>
-                <input
-                    type="number"
-                    id="num1"
-                    placeholder="Enter first number"
-                    step="any"
-                />
+                <p>Connected to Exercise 2 Calculator API (Port 3004)</p>
             </div>
 
-            <div class="input-group">
-                <label for="num2">Second Number:</label>
-                <input
-                    type="number"
-                    id="num2"
-                    placeholder="Enter second number"
-                    step="any"
-                />
+            <div class="home-nav">
+                <a href="index.html" class="btn">🏠 Home</a>
             </div>
 
-            <div class="button-grid">
-                <button
-                    class="calc-button add-btn"
-                    onclick="performOperation('add')"
-                >
-                    ➕ Add
-                </button>
-                <button
-                    class="calc-button subtract-btn"
-                    onclick="performOperation('subtract')"
-                >
-                    ➖ Subtract
-                </button>
-                <button
-                    class="calc-button multiply-btn"
-                    onclick="performOperation('multiply')"
-                >
-                    ✖️ Multiply
-                </button>
-                <button
-                    class="calc-button divide-btn"
-                    onclick="performOperation('divide')"
-                >
-                    ➗ Divide
-                </button>
-            </div>
+            <div class="calculator">
+                <div class="input-group">
+                    <label for="num1">First Number:</label>
+                    <input
+                        type="number"
+                        id="num1"
+                        placeholder="Enter first number"
+                        step="any"
+                    />
+                </div>
 
-            <div class="result-section">
-                <div class="result-label">Result:</div>
-                <div class="operation-display" id="operationDisplay"></div>
-                <div class="result-display" id="result">
-                    Enter numbers and click an operation
+                <div class="input-group">
+                    <label for="num2">Second Number:</label>
+                    <input
+                        type="number"
+                        id="num2"
+                        placeholder="Enter second number"
+                        step="any"
+                    />
+                </div>
+
+                <div class="button-grid">
+                    <button
+                        class="calc-button add-btn"
+                        onclick="performOperation('add')"
+                    >
+                        ➕ Add
+                    </button>
+                    <button
+                        class="calc-button subtract-btn"
+                        onclick="performOperation('subtract')"
+                    >
+                        ➖ Subtract
+                    </button>
+                    <button
+                        class="calc-button multiply-btn"
+                        onclick="performOperation('multiply')"
+                    >
+                        ✖️ Multiply
+                    </button>
+                    <button
+                        class="calc-button divide-btn"
+                        onclick="performOperation('divide')"
+                    >
+                        ➗ Divide
+                    </button>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-label">Result:</div>
+                    <div class="operation-display" id="operationDisplay"></div>
+                    <div class="result-display" id="result">
+                        Enter numbers and click an operation
+                    </div>
+                </div>
+
+                <div class="api-info">
+                    <strong>API Endpoints:</strong><br />
+                    • Add: GET /calculator/add?num1=X&num2=Y<br />
+                    • Subtract: GET /calculator/subtract?num1=X&num2=Y<br />
+                    • Multiply: GET /calculator/multiply?num1=X&num2=Y<br />
+                    • Divide: GET /calculator/divide?num1=X&num2=Y
                 </div>
             </div>
 
-            <div class="api-info">
-                <strong>API Endpoints:</strong><br />
-                • Add: GET /calculator/add?num1=X&num2=Y<br />
-                • Subtract: GET /calculator/subtract?num1=X&num2=Y<br />
-                • Multiply: GET /calculator/multiply?num1=X&num2=Y<br />
-                • Divide: GET /calculator/divide?num1=X&num2=Y
+            <!-- Footer -->
+            <div class="footer">
+                <p>Samuel Love 2025</p>
+                <p>Web Development Portfolio</p>
+                <a
+                    href="https://github.com/tatoslover/Module5Lab"
+                    class="github-link"
+                    target="_blank"
+                >
+                    View on GitHub
+                </a>
             </div>
         </div>
 

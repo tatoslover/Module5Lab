@@ -20,26 +20,36 @@ body {
 
 .header {
     text-align: center;
-    margin-bottom: 50px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    margin-bottom: 40px;
+    padding: 40px 0;
 }
 
 .header h1 {
     font-size: 3em;
-    color: white;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.header h2 {
+    font-size: 1.8em;
+    margin: 10px 0;
+    font-weight: 300;
+    opacity: 0.9;
+    color: white;
+}
+
 .header p {
     font-size: 1.2em;
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 600px;
-    margin: 0 auto;
+    opacity: 0.9;
+}
+
+.header-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 15px;
 }
 
 .exercises-grid {
@@ -47,6 +57,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
     margin-bottom: 50px;
+    align-items: stretch;
 }
 
 .exercise-card {
@@ -56,11 +67,19 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .exercise-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.exercise-card:hover .btn {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .exercise-card h3 {
@@ -93,7 +112,8 @@ body {
 
 .features {
     list-style: none;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    flex-grow: 1;
 }
 
 .features li {
@@ -115,19 +135,23 @@ body {
     display: inline-block;
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
-    padding: 12px 25px;
+    padding: 15px 30px;
     text-decoration: none;
-    border-radius: 25px;
+    border-radius: 30px;
     font-weight: 600;
     transition: all 0.3s ease;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-top: auto;
+    align-self: center;
+    width: fit-content;
     text-align: center;
+    font-size: 1.1em;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5) !important;
+    background: linear-gradient(45deg, #5a6fd8, #6b42a0);
 }
 
 .btn-secondary {
@@ -199,9 +223,32 @@ body {
 
 .footer {
     text-align: center;
-    margin-top: 50px;
-    padding: 30px;
-    color: rgba(255, 255, 255, 0.8);
+    color: white;
+    padding: 40px 0;
+    margin-top: 40px;
+}
+
+.github-link {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1.1em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: none;
+}
+
+.github-link:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Navigation styles */
@@ -271,5 +318,15 @@ body {
     .tech-stack {
         flex-direction: column;
         align-items: center;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        font-size: 1em;
+        margin-top: 20px;
+    }
+
+    .exercise-card {
+        padding: 20px;
     }
 }

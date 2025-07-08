@@ -13,3 +13,4 @@ yarn-error.log*
 *.log
 coverage/
 .nyc_output/
+portfolios
