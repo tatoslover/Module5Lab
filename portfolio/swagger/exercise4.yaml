@@ -1,0 +1,432 @@
+openapi: 3.0.0
+info:
+  title: Exercise 4 - Friends API
+  version: 1.0.0
+  description: |
+    API documentation for Exercise 4 which implements a Friends management API using Express.js.
+    This API provides CRUD operations for managing friends data including filtering, searching,
+    and updating friend information. The API supports gender and name filtering capabilities.
+  contact:
+    name: Samuel Love
+    email: samuelwelove@icloud.com
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3006
+    description: Friends API Server
+
+tags:
+  - name: Friends
+    description: Friends management operations
+  - name: System
+    description: System health and information
+
+paths:
+  /:
+    get:
+      tags:
+        - System
+      summary: Static Files
+      description: Serves static files from the public directory
+      responses:
+        '200':
+          description: Static content served successfully
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /friends:
+    get:
+      tags:
+        - Friends
+      summary: Get All Friends
+      description: Retrieves the complete list of friends
+      responses:
+        '200':
+          description: List of all friends
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Friend'
+              example:
+                - id: 1
+                  name: "John Doe"
+                  gender: "male"
+                - id: 2
+                  name: "Jane Smith"
+                  gender: "female"
+
+    post:
+      tags:
+        - Friends
+      summary: Add New Friend
+      description: Creates a new friend record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - gender
+              properties:
+                name:
+                  type: string
+                  description: Friend's name
+                  example: "Alice Johnson"
+                gender:
+                  type: string
+                  description: Friend's gender
+                  example: "female"
+                id:
+                  type: integer
+                  description: Optional ID (auto-generated if not provided)
+            example:
+              name: "Alice Johnson"
+              gender: "female"
+      responses:
+        '200':
+          description: Friend added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Friend'
+        '500':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Friend object must contain a name and gender"
+
+  /friends/filter:
+    get:
+      tags:
+        - Friends
+      summary: Filter Friends
+      description: Filters friends by gender and/or first letter of name
+      parameters:
+        - name: gender
+          in: query
+          required: false
+          description: Filter by gender (male/female)
+          schema:
+            type: string
+            enum: [male, female]
+          example: "male"
+        - name: letter
+          in: query
+          required: false
+          description: Filter by first letter of name
+          schema:
+            type: string
+            pattern: '^[A-Za-z]$'
+          example: "R"
+      responses:
+        '200':
+          description: Filtered friends list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of matching friends
+                  filters:
+                    type: object
+                    properties:
+                      gender:
+                        type: string
+                      letter:
+                        type: string
+                  friends:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Friend'
+              example:
+                count: 2
+                filters:
+                  gender: "male"
+                  letter: "R"
+                friends:
+                  - id: 3
+                    name: "Robert Wilson"
+                    gender: "male"
+                  - id: 5
+                    name: "Ryan Taylor"
+                    gender: "male"
+        '404':
+          description: No friends match the filter criteria
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No friends matching gender 'male' and starting with letter 'R'"
+
+  /friends/info:
+    get:
+      tags:
+        - Friends
+      summary: Request Header Information
+      description: Returns specific request headers (user-agent, content-type, accept)
+      responses:
+        '200':
+          description: Header information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Request header information"
+                  headers:
+                    type: object
+                    properties:
+                      user-agent:
+                        type: string
+                        example: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+                      content-type:
+                        type: string
+                        example: "application/json"
+                      accept:
+                        type: string
+                        example: "application/json, text/plain, */*"
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /friends/{id}:
+    get:
+      tags:
+        - Friends
+      summary: Get Friend by ID
+      description: Retrieves a single friend by their ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Friend ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        '200':
+          description: Friend found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Friend found with ID 1"
+                  friend:
+                    $ref: '#/components/schemas/Friend'
+        '400':
+          description: Invalid ID format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid ID format"
+                  message:
+                    type: string
+                    example: "ID must be a number"
+                  providedId:
+                    type: string
+                    example: "abc"
+        '404':
+          description: Friend not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Friend not found"
+                  message:
+                    type: string
+                    example: "No friend exists with ID 999"
+                  availableIds:
+                    type: array
+                    items:
+                      type: integer
+                    example: [1, 2, 3, 4, 5]
+
+    put:
+      tags:
+        - Friends
+      summary: Update Friend
+      description: Updates an existing friend's information
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Friend ID to update
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - gender
+              properties:
+                name:
+                  type: string
+                  description: Updated friend's name
+                  example: "John Updated"
+                gender:
+                  type: string
+                  description: Updated friend's gender
+                  example: "male"
+      responses:
+        '200':
+          description: Friend updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Successfully updated friend with ID 1"
+                  oldData:
+                    $ref: '#/components/schemas/Friend'
+                  newData:
+                    $ref: '#/components/schemas/Friend'
+                  timestamp:
+                    type: string
+                    format: date-time
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Missing required fields"
+                  message:
+                    type: string
+                    example: "Friend object must contain 'name' and 'gender'"
+                  received:
+                    type: object
+                    additionalProperties: true
+        '404':
+          description: Friend not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Friend not found"
+                  message:
+                    type: string
+                    example: "No friend exists with ID 999"
+                  availableIds:
+                    type: array
+                    items:
+                      type: integer
+
+components:
+  schemas:
+    Friend:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the friend
+          example: 1
+        name:
+          type: string
+          description: Friend's full name
+          example: "John Doe"
+        gender:
+          type: string
+          description: Friend's gender
+          enum: [male, female]
+          example: "male"
+      required:
+        - id
+        - name
+        - gender
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type or message
+        message:
+          type: string
+          description: Detailed error description
+        timestamp:
+          type: string
+          format: date-time
+          description: When the error occurred
+      required:
+        - error
+        - message
+
+  examples:
+    FriendsListExample:
+      summary: Example friends list
+      value:
+        - id: 1
+          name: "John Doe"
+          gender: "male"
+        - id: 2
+          name: "Jane Smith"
+          gender: "female"
+        - id: 3
+          name: "Robert Wilson"
+          gender: "male"
+
+    FilteredFriendsExample:
+      summary: Filtered friends response
+      value:
+        count: 1
+        filters:
+          gender: "female"
+          letter: "J"
+        friends:
+          - id: 2
+            name: "Jane Smith"
+            gender: "female"
+
+    HeaderInfoExample:
+      summary: Header information response
+      value:
+        message: "Request header information"
+        headers:
+          user-agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+          content-type: "application/json"
+          accept: "application/json, text/plain, */*"
+        timestamp: "2025-01-07T12:00:00.000Z"

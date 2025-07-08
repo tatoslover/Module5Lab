@@ -1,0 +1,657 @@
+openapi: 3.0.0
+info:
+  title: Exercise 8 - eCommerce Store API
+  version: 1.0.0
+  description: |
+    API documentation for Exercise 8 which implements a comprehensive eCommerce Store API using Express.js.
+    This API provides product management, search functionality, category filtering, and caching capabilities.
+    The store integrates with a fake store API to simulate real-world eCommerce operations with professional
+    features like comprehensive logging, error handling, and performance optimizations.
+  contact:
+    name: Samuel Love
+    email: samuelwelove@icloud.com
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3010
+    description: eCommerce Store API Server
+
+tags:
+  - name: Products
+    description: Product management and retrieval
+  - name: Categories
+    description: Product category operations
+  - name: Search
+    description: Product search functionality
+  - name: Cache
+    description: Cache management operations
+  - name: Portfolio
+    description: Portfolio and static content
+  - name: System
+    description: System health and information
+
+paths:
+  /:
+    get:
+      tags:
+        - Portfolio
+      summary: Serve eCommerce Store Portfolio
+      description: Returns the main HTML page for the fake eCommerce store
+      responses:
+        '200':
+          description: HTML page served successfully
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /health:
+    get:
+      tags:
+        - System
+      summary: Health Check
+      description: Returns server health status and uptime information
+      responses:
+        '200':
+          description: Server health information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  uptime:
+                    type: number
+                    description: Server uptime in seconds
+                    example: 3600.5
+                  service:
+                    type: string
+                    example: "Module 5 Lab - Exercise 8 eCommerce API"
+
+  /api/products:
+    get:
+      tags:
+        - Products
+      summary: Get All Products
+      description: Retrieve all products from the fake store API with optional filtering
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Limit the number of products returned
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+          example: 10
+        - name: sort
+          in: query
+          required: false
+          description: Sort products in ascending or descending order
+          schema:
+            type: string
+            enum: [asc, desc]
+          example: "asc"
+      responses:
+        '200':
+          description: Products retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  count:
+                    type: integer
+                    description: Number of products returned
+                    example: 20
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  cached:
+                    type: boolean
+                    description: Whether the data was served from cache
+                    example: false
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/products/categories:
+    get:
+      tags:
+        - Categories
+      summary: Get All Product Categories
+      description: Retrieve all available product categories
+      responses:
+        '200':
+          description: Categories retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  count:
+                    type: integer
+                    description: Number of categories
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: string
+                    example: ["electronics", "jewelery", "men's clothing", "women's clothing"]
+                  cached:
+                    type: boolean
+                    description: Whether the data was served from cache
+                    example: false
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/products/limit/{limit}:
+    get:
+      tags:
+        - Products
+      summary: Get Limited Products
+      description: Retrieve a specific number of products (1-20)
+      parameters:
+        - name: limit
+          in: path
+          required: true
+          description: Number of products to return
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+          example: 5
+      responses:
+        '200':
+          description: Limited products retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  limit:
+                    type: integer
+                    description: The limit that was applied
+                    example: 5
+                  count:
+                    type: integer
+                    description: Number of products returned
+                    example: 5
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  cached:
+                    type: boolean
+                    example: false
+        '400':
+          description: Invalid limit parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid limit parameter"
+                code: "INVALID_LIMIT"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/products/search:
+    get:
+      tags:
+        - Search
+      summary: Search Products
+      description: Search products by title, description, category, and price range
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Search query (searches in title and description)
+          schema:
+            type: string
+          example: "shirt"
+        - name: category
+          in: query
+          required: false
+          description: Filter by category
+          schema:
+            type: string
+          example: "men's clothing"
+        - name: minPrice
+          in: query
+          required: false
+          description: Minimum price filter
+          schema:
+            type: number
+            format: float
+          example: 10.0
+        - name: maxPrice
+          in: query
+          required: false
+          description: Maximum price filter
+          schema:
+            type: number
+            format: float
+          example: 100.0
+      responses:
+        '200':
+          description: Search completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  query:
+                    type: string
+                    description: The search query that was used
+                    example: "shirt"
+                  filters:
+                    type: object
+                    properties:
+                      category:
+                        type: string
+                        nullable: true
+                        example: "men's clothing"
+                      minPrice:
+                        type: number
+                        nullable: true
+                        example: 10.0
+                      maxPrice:
+                        type: number
+                        nullable: true
+                        example: 100.0
+                  count:
+                    type: integer
+                    description: Number of products found
+                    example: 3
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '400':
+          description: Missing or invalid search query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Search query is required"
+                code: "MISSING_QUERY"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/products/category/{category}:
+    get:
+      tags:
+        - Categories
+      summary: Get Products by Category
+      description: Retrieve all products from a specific category
+      parameters:
+        - name: category
+          in: path
+          required: true
+          description: Product category name
+          schema:
+            type: string
+          example: "electronics"
+        - name: limit
+          in: query
+          required: false
+          description: Limit the number of products returned
+          schema:
+            type: integer
+            minimum: 1
+          example: 10
+        - name: sort
+          in: query
+          required: false
+          description: Sort products in ascending or descending order
+          schema:
+            type: string
+            enum: [asc, desc]
+          example: "asc"
+      responses:
+        '200':
+          description: Products from category retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  category:
+                    type: string
+                    description: The category that was queried
+                    example: "electronics"
+                  count:
+                    type: integer
+                    description: Number of products in this category
+                    example: 6
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  cached:
+                    type: boolean
+                    example: false
+        '404':
+          description: Category not found or no products in category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Category not found"
+                code: "CATEGORY_NOT_FOUND"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get Product by ID
+      description: Retrieve a single product by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Product ID
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Product retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Product'
+                  cached:
+                    type: boolean
+                    description: Whether the data was served from cache
+                    example: false
+        '400':
+          description: Invalid product ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid product ID"
+                code: "INVALID_ID"
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Product not found"
+                code: "PRODUCT_NOT_FOUND"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/cache/clear:
+    post:
+      tags:
+        - Cache
+      summary: Clear API Cache
+      description: Clear all cached API responses (development/testing purposes)
+      responses:
+        '200':
+          description: Cache cleared successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Cache cleared successfully"
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /api/cache/status:
+    get:
+      tags:
+        - Cache
+      summary: Get Cache Status
+      description: Get information about the current cache state
+      responses:
+        '200':
+          description: Cache status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  cache:
+                    type: object
+                    properties:
+                      size:
+                        type: integer
+                        description: Number of cached entries
+                        example: 5
+                      timeout:
+                        type: integer
+                        description: Cache timeout in milliseconds
+                        example: 300000
+                      entries:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              description: Cache key
+                              example: "products_all"
+                            age:
+                              type: integer
+                              description: Age of cached entry in milliseconds
+                              example: 120000
+                            expires:
+                              type: integer
+                              description: Time until expiry in milliseconds
+                              example: 180000
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Product ID
+          example: 1
+        title:
+          type: string
+          description: Product title
+          example: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
+        price:
+          type: number
+          format: float
+          description: Product price
+          example: 109.95
+        description:
+          type: string
+          description: Product description
+          example: "Your perfect pack for everyday use and walks in the forest."
+        category:
+          type: string
+          description: Product category
+          example: "men's clothing"
+        image:
+          type: string
+          format: uri
+          description: Product image URL
+          example: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+        rating:
+          type: object
+          properties:
+            rate:
+              type: number
+              format: float
+              example: 3.9
+            count:
+              type: integer
+              example: 120
+      required:
+        - id
+        - title
+        - price
+        - description
+        - category
+        - image
+        - rating
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+      required:
+        - error
+        - code
+
+  examples:
+    ProductExample:
+      summary: Example product
+      value:
+        id: 1
+        title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
+        price: 109.95
+        description: "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday"
+        category: "men's clothing"
+        image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+        rating:
+          rate: 3.9
+          count: 120
+
+    ProductsResponse:
+      summary: Products list response
+      value:
+        success: true
+        count: 20
+        data:
+          - id: 1
+            title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
+            price: 109.95
+            description: "Your perfect pack for everyday use"
+            category: "men's clothing"
+            image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            rating:
+              rate: 3.9
+              count: 120
+        cached: false
+
+    CategoriesResponse:
+      summary: Categories list response
+      value:
+        success: true
+        count: 4
+        data: ["electronics", "jewelery", "men's clothing", "women's clothing"]
+        cached: false
+
+    SearchResponse:
+      summary: Search results response
+      value:
+        success: true
+        query: "shirt"
+        filters:
+          category: "men's clothing"
+          minPrice: 10.0
+          maxPrice: 100.0
+        count: 3
+        data:
+          - id: 2
+            title: "Mens Casual Premium Slim Fit T-Shirts"
+            price: 22.3
+            description: "Slim-fitting style, contrast raglan long sleeve"
+            category: "men's clothing"
+            image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
+            rating:
+              rate: 4.1
+              count: 259
+
+    CacheStatusResponse:
+      summary: Cache status response
+      value:
+        success: true
+        cache:
+          size: 5
+          timeout: 300000
+          entries:
+            - key: "products_all"
+              age: 120000
+              expires: 180000
+            - key: "categories_all"
+              age: 90000
+              expires: 210000
+
+    ErrorExample:
+      summary: Error response example
+      value:
+        error: "Product not found"
+        code: "PRODUCT_NOT_FOUND"

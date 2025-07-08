@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Module 5 Lab - API Documentation</title>
+        <link rel="stylesheet" href="css/main.css" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui.css"
+        />
+        <style>
+            .swagger-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            .header {
+                text-align: center;
+                padding: 60px 20px;
+                color: white;
+                margin-bottom: 30px;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+                margin-bottom: 10px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            .header p {
+                font-size: 1.2em;
+                opacity: 0.9;
+            }
+
+            .header-logo {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                vertical-align: middle;
+                margin-right: 15px;
+            }
+
+            .exercise-selector {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 30px;
+            }
+
+            .exercise-tabs {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 15px;
+                margin-bottom: 20px;
+                justify-content: center;
+                max-width: 800px;
+                margin: 0 auto 20px auto;
+            }
+
+            .exercise-tab {
+                padding: 15px 10px;
+                background: #f8f9fa;
+                border: 2px solid #e9ecef;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 500;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 80px;
+                gap: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .exercise-tab:hover {
+                background: #e9ecef;
+                border-color: #dee2e6;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .exercise-tab.active {
+                background: #667eea;
+                color: white;
+                border-color: #667eea;
+                transform: translateY(-1px);
+                box-shadow: 0 3px 6px rgba(102, 126, 234, 0.3);
+            }
+
+            .exercise-info {
+                background: #f8f9fa;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                text-align: center;
+                max-width: 800px;
+                margin: 0 auto 20px auto;
+            }
+
+            .exercise-info h3 {
+                margin: 0 0 10px 0;
+                color: #495057;
+            }
+
+            .exercise-info p {
+                margin: 0;
+                color: #6c757d;
+                line-height: 1.5;
+            }
+
+            .swagger-ui-container {
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+            }
+
+            .loading {
+                text-align: center;
+                padding: 50px;
+                color: #6c757d;
+            }
+
+            .error {
+                background: #f8d7da;
+                color: #721c24;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 20px 0;
+            }
+
+            .home-nav {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .home-nav .btn {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                padding: 12px 24px;
+                text-decoration: none;
+                border-radius: 25px;
+                transition: all 0.3s ease;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .home-nav .btn:hover {
+                background: #5a6fd8;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .footer {
+                text-align: center;
+                padding: 40px 20px;
+                color: white;
+                margin-top: 60px;
+            }
+
+            .footer p {
+                margin: 5px 0;
+                opacity: 0.9;
+            }
+
+            .github-link {
+                display: inline-block;
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 15px 30px;
+                border-radius: 50px;
+                text-decoration: none;
+                margin-top: 20px;
+                transition: all 0.3s ease;
+                font-weight: 600;
+                font-size: 1.1em;
+            }
+
+            .github-link:hover {
+                background: rgba(0, 0, 0, 0.9);
+                transform: translateY(-2px);
+            }
+
+            /* Swagger UI customizations */
+            .swagger-ui .topbar {
+                display: none;
+            }
+
+            .swagger-ui .info {
+                margin: 20px 0;
+            }
+
+            .swagger-ui .scheme-container {
+                background: #f8f9fa;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 20px 0;
+            }
+
+            /* Mock server notice */
+            .mock-notice {
+                background: #d4edda;
+                color: #155724;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 20px 0;
+                border: 1px solid #c3e6cb;
+            }
+
+            .mock-notice h4 {
+                margin: 0 0 10px 0;
+                color: #155724;
+            }
+
+            .mock-notice p {
+                margin: 5px 0;
+            }
+
+            @media (max-width: 768px) {
+                .exercise-tabs {
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(4, 1fr);
+                    gap: 10px;
+                    max-width: 400px;
+                }
+
+                .exercise-tab {
+                    padding: 12px 8px;
+                    min-height: 70px;
+                    font-size: 0.9em;
+                }
+
+                .swagger-header h1 {
+                    font-size: 2em;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .exercise-tabs {
+                    grid-template-columns: repeat(1, 1fr);
+                    grid-template-rows: repeat(8, 1fr);
+                    max-width: 300px;
+                }
+
+                .exercise-tab {
+                    padding: 10px 8px;
+                    min-height: 60px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="swagger-container">
+            <header class="header">
+                <h1>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG3HuBlAUw3Wu-46hoogyANMHo1VC-tKnE1Q&s"
+                        alt="IOD Logo"
+                        class="header-logo"
+                    />Module 5 Lab - API Documentation
+                </h1>
+                <p>Comprehensive Swagger documentation for all exercises</p>
+            </header>
+
+            <div class="home-nav">
+                <a href="index.html" class="btn">🏠 Home</a>
+            </div>
+
+            <div class="exercise-selector">
+                <h3
+                    style="
+                        text-align: center;
+                        margin-bottom: 25px;
+                        color: #495057;
+                        font-size: 1.3em;
+                    "
+                >
+                    Select Exercise to View Documentation
+                </h3>
+                <div class="exercise-tabs">
+                    <div class="exercise-tab active" data-exercise="1">
+                        <div><strong>Exercise 1</strong></div>
+                        <div><small>Multi-Port Servers</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="2">
+                        <div><strong>Exercise 2</strong></div>
+                        <div><small>Basic Calculator</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="3">
+                        <div><strong>Exercise 3</strong></div>
+                        <div><small>Calculator + Portfolio</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="4">
+                        <div><strong>Exercise 4</strong></div>
+                        <div><small>Friends API</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="5">
+                        <div><strong>Exercise 5</strong></div>
+                        <div><small>Friends MVC</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="6">
+                        <div><strong>Exercise 6</strong></div>
+                        <div><small>Calculator + Tests</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="7">
+                        <div><strong>Exercise 7</strong></div>
+                        <div><small>Enhanced Calculator</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="8">
+                        <div><strong>Exercise 8</strong></div>
+                        <div><small>eCommerce Store</small></div>
+                    </div>
+                </div>
+
+                <div class="exercise-info">
+                    <h3 id="exercise-title">
+                        Exercise 1 - Multi-Port Server Management
+                    </h3>
+                    <p id="exercise-description">
+                        Learn how to create and manage multiple Express.js
+                        servers running on different ports simultaneously.
+                    </p>
+                </div>
+            </div>
+
+            <div class="swagger-ui-container">
+                <div id="swagger-ui"></div>
+                <div id="loading" class="loading">
+                    Loading API documentation...
+                </div>
+                <div id="error" class="error" style="display: none">
+                    Failed to load API documentation. Please try again.
+                </div>
+            </div>
+
+            <div class="mock-notice">
+                <h4>📡 Simulation Mode Active</h4>
+                <p>
+                    This documentation is running in simulation mode with mock
+                    data.
+                </p>
+                <p>
+                    All API responses are simulated and don't require actual
+                    servers to be running.
+                </p>
+                <p>
+                    Click "Try it out" to test endpoints with realistic mock
+                    responses!
+                </p>
+            </div>
+
+            <div class="footer">
+                <p>Samuel Love 2025</p>
+                <p>Web Development Portfolio</p>
+                <a
+                    href="https://github.com/tatoslover/Module5Lab"
+                    class="github-link"
+                    target="_blank"
+                >
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-standalone-preset.js"></script>
+        <script src="js/swagger-specs.js"></script>
+        <script>
+            const exercises = {
+                1: {
+                    title: "Exercise 1 - Multi-Port Server Management",
+                    description:
+                        "Learn how to create and manage multiple Express.js servers running on different ports simultaneously.",
+                    file: "swagger/exercise1.yaml",
+                },
+                2: {
+                    title: "Exercise 2 - Basic Calculator API",
+                    description:
+                        "Simple REST API for basic arithmetic operations with query parameters.",
+                    file: "swagger/exercise2.yaml",
+                },
+                3: {
+                    title: "Exercise 3 - Calculator with Portfolio Integration",
+                    description:
+                        "Enhanced calculator API with integrated portfolio showcase and static file serving.",
+                    file: "swagger/exercise3.yaml",
+                },
+                4: {
+                    title: "Exercise 4 - Friends Management API",
+                    description:
+                        "Complete CRUD API for managing friends data with filtering, searching, and validation.",
+                    file: "swagger/exercise4.yaml",
+                },
+                5: {
+                    title: "Exercise 5 - Friends API with MVC Architecture",
+                    description:
+                        "Professional MVC implementation of the Friends API with clean separation of concerns.",
+                    file: "swagger/exercise5.yaml",
+                },
+                6: {
+                    title: "Exercise 6 - Calculator API with Comprehensive Testing",
+                    description:
+                        "Calculator API with Jest testing framework and comprehensive test coverage.",
+                    file: "swagger/exercise6.yaml",
+                },
+                7: {
+                    title: "Exercise 7 - Enhanced Calculator with Advanced Libraries",
+                    description:
+                        "Professional calculator API with advanced logging, error handling, and custom libraries.",
+                    file: "swagger/exercise7.yaml",
+                },
+                8: {
+                    title: "Exercise 8 - eCommerce Store API",
+                    description:
+                        "Full-featured eCommerce API with product management, search, caching, and comprehensive documentation.",
+                    file: "swagger/exercise8.yaml",
+                },
+            };
+
+            let currentSwaggerUI = null;
+            let currentExercise = 1;
+            let isLoading = false;
+            let loadingQueue = [];
+            let debounceTimer = null;
+
+            function updateExerciseInfo(exerciseNumber) {
+                const exercise = exercises[exerciseNumber];
+                document.getElementById("exercise-title").textContent =
+                    exercise.title;
+                document.getElementById("exercise-description").textContent =
+                    exercise.description;
+            }
+
+            function showLoading() {
+                document.getElementById("loading").style.display = "block";
+                document.getElementById("error").style.display = "none";
+
+                // Safely clear swagger-ui
+                const container = document.getElementById("swagger-ui");
+                if (container) {
+                    container.innerHTML = "";
+                }
+            }
+
+            function hideLoading() {
+                document.getElementById("loading").style.display = "none";
+            }
+
+            function showError() {
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("error").style.display = "block";
+
+                // Safely clear swagger-ui
+                const container = document.getElementById("swagger-ui");
+                if (container) {
+                    container.innerHTML = "";
+                }
+
+                // Reset state
+                currentSwaggerUI = null;
+                isLoading = false;
+                processQueue();
+            }
+
+            function processQueue() {
+                if (isLoading || loadingQueue.length === 0) return;
+
+                const exerciseNumber = loadingQueue.shift();
+                console.log(
+                    `📋 Processing queue: Exercise ${exerciseNumber}, Queue length: ${loadingQueue.length}`,
+                );
+                createSwaggerUI(exerciseNumber);
+            }
+
+            function createSwaggerUI(exerciseNumber) {
+                if (isLoading) return;
+
+                // Safety check for required libraries
+                if (
+                    !window.SwaggerUIBundle ||
+                    !window.SwaggerUIStandalonePreset
+                ) {
+                    console.error("SwaggerUI libraries not available");
+                    showError();
+                    return;
+                }
+
+                isLoading = true;
+                console.log(
+                    `🔄 Creating Swagger UI for Exercise ${exerciseNumber}`,
+                );
+
+                const spec = window.swaggerSpecs[exerciseNumber];
+                if (!spec) {
+                    console.error(
+                        `No specification found for exercise ${exerciseNumber}`,
+                    );
+                    showError();
+                    return;
+                }
+
+                // Properly dispose of previous SwaggerUI instance
+                if (
+                    currentSwaggerUI &&
+                    typeof currentSwaggerUI.getSystem === "function"
+                ) {
+                    try {
+                        console.log("🧹 Disposing previous SwaggerUI instance");
+                        currentSwaggerUI = null;
+                    } catch (e) {
+                        console.warn("Warning disposing SwaggerUI:", e);
+                    }
+                }
+
+                // Clear the container and recreate it
+                const container = document.getElementById("swagger-ui");
+                const parent = container.parentNode;
+                const newContainer = document.createElement("div");
+                newContainer.id = "swagger-ui";
+                parent.replaceChild(newContainer, container);
+
+                // Longer delay to ensure proper cleanup
+                setTimeout(() => {
+                    try {
+                        // Check if container still exists
+                        const targetContainer =
+                            document.getElementById("swagger-ui");
+                        if (!targetContainer) {
+                            console.error("Target container not found");
+                            showError();
+                            return;
+                        }
+
+                        // Remove server URLs from spec to prevent network requests
+                        const cleanSpec = JSON.parse(JSON.stringify(spec));
+                        if (cleanSpec.servers) {
+                            delete cleanSpec.servers;
+                        }
+
+                        currentSwaggerUI = SwaggerUIBundle({
+                            spec: cleanSpec,
+                            dom_id: "#swagger-ui",
+                            deepLinking: false,
+                            presets: [
+                                SwaggerUIBundle.presets.apis,
+                                SwaggerUIStandalonePreset,
+                            ],
+                            plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+                            layout: "StandaloneLayout",
+                            validatorUrl: null,
+                            tryItOutEnabled: true,
+                            supportedSubmitMethods: [
+                                "get",
+                                "post",
+                                "put",
+                                "delete",
+                                "patch",
+                            ],
+                            requestInterceptor: function (request) {
+                                console.log(
+                                    "🔄 Intercepting request:",
+                                    request,
+                                );
+
+                                // Always return mock response immediately
+                                return new Promise((resolve) => {
+                                    // Ensure we have a valid request object
+                                    const safeRequest = {
+                                        url: request?.url || "/default",
+                                        method: request?.method || "GET",
+                                        headers: request?.headers || {},
+                                        body: request?.body || null,
+                                    };
+
+                                    console.log(
+                                        "🎭 Generating mock response for:",
+                                        safeRequest.url,
+                                    );
+
+                                    setTimeout(
+                                        () => {
+                                            const mockResponse =
+                                                getMockResponse(
+                                                    exerciseNumber,
+                                                    safeRequest,
+                                                );
+                                            console.log(
+                                                "✅ Mock response generated:",
+                                                mockResponse,
+                                            );
+                                            resolve(mockResponse);
+                                        },
+                                        300 + Math.random() * 200,
+                                    );
+                                });
+                            },
+                            onComplete: function () {
+                                console.log(
+                                    `✅ Swagger UI loaded for Exercise ${exerciseNumber}`,
+                                );
+                                hideLoading();
+                                isLoading = false;
+                                processQueue();
+                            },
+                            onFailure: function (error) {
+                                console.error(
+                                    `❌ Swagger UI failed for Exercise ${exerciseNumber}:`,
+                                    error,
+                                );
+                                showError();
+                            },
+                        });
+                    } catch (error) {
+                        console.error(
+                            `❌ Error creating Swagger UI for Exercise ${exerciseNumber}:`,
+                            error,
+                        );
+                        showError();
+                    }
+                }, 300);
+            }
+
+            function loadSwaggerDoc(exerciseNumber) {
+                const exercise = exercises[exerciseNumber];
+                if (!exercise) {
+                    console.error(`Exercise ${exerciseNumber} not found`);
+                    return;
+                }
+
+                // Clear any existing debounce timer
+                if (debounceTimer) {
+                    clearTimeout(debounceTimer);
+                }
+
+                // Debounce the loading to prevent rapid clicks
+                debounceTimer = setTimeout(() => {
+                    console.log(
+                        `📝 Loading request for Exercise ${exerciseNumber}`,
+                    );
+
+                    // Clear existing queue to prevent conflicts
+                    loadingQueue = [];
+
+                    showLoading();
+                    updateExerciseInfo(exerciseNumber);
+
+                    // Update current exercise and active tab
+                    currentExercise = exerciseNumber;
+                    document
+                        .querySelectorAll(".exercise-tab")
+                        .forEach((tab) => {
+                            tab.classList.remove("active");
+                        });
+                    document
+                        .querySelector(`[data-exercise="${exerciseNumber}"]`)
+                        .classList.add("active");
+
+                    // Add to queue and process
+                    loadingQueue.push(exerciseNumber);
+                    processQueue();
+                }, 100);
+            }
+
+            // Event listeners for exercise tabs
+            document.querySelectorAll(".exercise-tab").forEach((tab) => {
+                tab.addEventListener("click", function () {
+                    const exerciseNumber = parseInt(this.dataset.exercise);
+                    console.log(
+                        `🖱️ Tab clicked: Exercise ${exerciseNumber}, Current: ${currentExercise}, Loading: ${isLoading}`,
+                    );
+                    if (exerciseNumber !== currentExercise) {
+                        loadSwaggerDoc(exerciseNumber);
+                    }
+                });
+            });
+
+            // Keyboard navigation
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "ArrowLeft" && currentExercise > 1) {
+                    console.log(
+                        `⬅️ Arrow left: Moving from ${currentExercise} to ${currentExercise - 1}`,
+                    );
+                    loadSwaggerDoc(currentExercise - 1);
+                } else if (e.key === "ArrowRight" && currentExercise < 8) {
+                    console.log(
+                        `➡️ Arrow right: Moving from ${currentExercise} to ${currentExercise + 1}`,
+                    );
+                    loadSwaggerDoc(currentExercise + 1);
+                }
+            });
+
+            // Mock response generator for simulation
+            function getMockResponse(exerciseNumber, request) {
+                // Default mock response structure
+                const mockResponse = {
+                    url: request.url || "/",
+                    status: 200,
+                    statusText: "OK",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Mock-Response": "true",
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                    text: JSON.stringify({
+                        message: `Mock response for Exercise ${exerciseNumber}`,
+                        timestamp: new Date().toISOString(),
+                        success: true,
+                        data: {
+                            exerciseNumber: exerciseNumber,
+                            endpoint: request.url,
+                            method: request.method || "GET",
+                        },
+                    }),
+                };
+
+                // Simple exercise-specific responses
+                if (exerciseNumber === 1) {
+                    mockResponse.text = JSON.stringify({
+                        message:
+                            "Welcome to Exercise 1 - Multi-Port Server Management!",
+                        server: "Mock Server 1",
+                        port: 3001,
+                        timestamp: new Date().toISOString(),
+                    });
+                } else if (exerciseNumber >= 2 && exerciseNumber <= 7) {
+                    mockResponse.text = JSON.stringify({
+                        message: `Welcome to Exercise ${exerciseNumber} Calculator API!`,
+                        operation: "sample",
+                        result: 42,
+                        timestamp: new Date().toISOString(),
+                    });
+                } else if (exerciseNumber === 8) {
+                    mockResponse.text = JSON.stringify({
+                        message: "Welcome to Exercise 8 - eCommerce Store API!",
+                        products: [
+                            { id: 1, name: "Sample Product", price: 29.99 },
+                            { id: 2, name: "Another Product", price: 19.99 },
+                        ],
+                        timestamp: new Date().toISOString(),
+                    });
+                }
+
+                return mockResponse;
+            }
+
+            // Initialize the app
+            function initializeApp() {
+                // Check for required libraries
+                if (!window.SwaggerUIBundle) {
+                    console.error("SwaggerUIBundle not loaded");
+                    showError();
+                    return;
+                }
+
+                if (!window.SwaggerUIStandalonePreset) {
+                    console.error("SwaggerUIStandalonePreset not loaded");
+                    showError();
+                    return;
+                }
+
+                if (!window.swaggerSpecs) {
+                    console.error("Swagger specifications not loaded");
+                    showError();
+                    return;
+                }
+
+                console.log("🚀 Initializing Swagger Documentation App");
+                console.log("✅ SwaggerUIBundle loaded");
+                console.log("✅ SwaggerUIStandalonePreset loaded");
+                console.log("✅ Swagger specifications loaded");
+
+                currentExercise = 1;
+                updateExerciseInfo(1);
+                showLoading();
+                createSwaggerUI(1);
+            }
+
+            // Wait for DOM to be ready
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", initializeApp);
+            } else {
+                initializeApp();
+            }
+
+            // Add some helpful instructions
+            console.log("Swagger Documentation Navigator - Simulation Mode");
+            console.log("Use arrow keys to navigate between exercises");
+            console.log("Left/Right arrows to switch between Exercise 1-8");
+            console.log("All API responses are simulated with mock data");
+        </script>
+    </body>
+</html>

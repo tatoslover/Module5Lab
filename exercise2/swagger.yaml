@@ -1,0 +1,333 @@
+openapi: 3.0.0
+info:
+  title: Exercise 2 - Calculator API
+  version: 1.0.0
+  description: |
+    API documentation for Exercise 2 which implements a basic calculator service using Express.js.
+    This API provides mathematical operations (addition, subtraction, multiplication, division) via REST endpoints.
+    All operations use query parameters to pass numbers and return JSON responses with results.
+  contact:
+    name: Samuel Love
+    email: samuelwelove@icloud.com
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3004
+    description: Calculator API Server
+
+tags:
+  - name: Calculator
+    description: Mathematical operations
+  - name: System
+    description: System health and information
+
+paths:
+  /:
+    get:
+      tags:
+        - System
+      summary: API Welcome
+      description: Returns welcome message and available calculator endpoints
+      responses:
+        '200':
+          description: Welcome message with API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome to Calculator API!"
+                  server:
+                    type: string
+                    example: "Exercise 2 - Calculator Server"
+                  port:
+                    type: integer
+                    example: 3004
+                  timestamp:
+                    type: string
+                    format: date-time
+                  endpoints:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "GET /calculator/add?num1=5&num2=3"
+                      - "GET /calculator/subtract?num1=10&num2=4"
+                      - "GET /calculator/multiply?num1=6&num2=7"
+                      - "GET /calculator/divide?num1=20&num2=4"
+                  usage:
+                    type: string
+                    example: "Pass num1 and num2 as query parameters"
+
+  /health:
+    get:
+      tags:
+        - System
+      summary: Health Check
+      description: Returns server health status and uptime information
+      responses:
+        '200':
+          description: Server health information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+
+  /calculator/add:
+    get:
+      tags:
+        - Calculator
+      summary: Addition Operation
+      description: Adds two numbers and returns the result
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: First number to add
+          schema:
+            type: number
+          example: 5
+        - name: num2
+          in: query
+          required: true
+          description: Second number to add
+          schema:
+            type: number
+          example: 3
+      responses:
+        '200':
+          description: Addition result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "addition"
+                num1: 5
+                num2: 3
+                result: 8
+                timestamp: "2025-01-07T12:00:00.000Z"
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /calculator/subtract:
+    get:
+      tags:
+        - Calculator
+      summary: Subtraction Operation
+      description: Subtracts the second number from the first number
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: Number to subtract from
+          schema:
+            type: number
+          example: 10
+        - name: num2
+          in: query
+          required: true
+          description: Number to subtract
+          schema:
+            type: number
+          example: 4
+      responses:
+        '200':
+          description: Subtraction result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "subtraction"
+                num1: 10
+                num2: 4
+                result: 6
+                timestamp: "2025-01-07T12:00:00.000Z"
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /calculator/multiply:
+    get:
+      tags:
+        - Calculator
+      summary: Multiplication Operation
+      description: Multiplies two numbers and returns the result
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: First number to multiply
+          schema:
+            type: number
+          example: 6
+        - name: num2
+          in: query
+          required: true
+          description: Second number to multiply
+          schema:
+            type: number
+          example: 7
+      responses:
+        '200':
+          description: Multiplication result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "multiplication"
+                num1: 6
+                num2: 7
+                result: 42
+                timestamp: "2025-01-07T12:00:00.000Z"
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /calculator/divide:
+    get:
+      tags:
+        - Calculator
+      summary: Division Operation
+      description: Divides the first number by the second number
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: Dividend (number to be divided)
+          schema:
+            type: number
+          example: 20
+        - name: num2
+          in: query
+          required: true
+          description: Divisor (number to divide by)
+          schema:
+            type: number
+          example: 4
+      responses:
+        '200':
+          description: Division result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "division"
+                num1: 20
+                num2: 4
+                result: 5
+                timestamp: "2025-01-07T12:00:00.000Z"
+        '400':
+          description: Invalid input parameters or division by zero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Division by zero is not allowed"
+                message: "Cannot divide by zero"
+                timestamp: "2025-01-07T12:00:00.000Z"
+
+components:
+  schemas:
+    CalculationResult:
+      type: object
+      properties:
+        operation:
+          type: string
+          description: The mathematical operation performed
+          enum: [addition, subtraction, multiplication, division]
+        num1:
+          type: number
+          description: First operand
+        num2:
+          type: number
+          description: Second operand
+        result:
+          type: number
+          description: Result of the calculation
+        timestamp:
+          type: string
+          format: date-time
+          description: When the calculation was performed
+      required:
+        - operation
+        - num1
+        - num2
+        - result
+        - timestamp
+
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+          example: "healthy"
+        server:
+          type: string
+          example: "Calculator API"
+        port:
+          type: integer
+          example: 3004
+        uptime:
+          type: number
+          description: Server uptime in seconds
+          example: 1234.567
+        timestamp:
+          type: string
+          format: date-time
+      required:
+        - status
+        - server
+        - port
+        - uptime
+        - timestamp
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type or category
+        message:
+          type: string
+          description: Detailed error message
+        server:
+          type: string
+          description: Server identifier
+        port:
+          type: integer
+          description: Server port
+        timestamp:
+          type: string
+          format: date-time
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+      required:
+        - error
+        - message
+      example:
+        error: "Invalid parameters"
+        message: "Both num1 and num2 must be valid numbers"
+        server: "Calculator API"
+        port: 3004
+        timestamp: "2025-01-07T12:00:00.000Z"

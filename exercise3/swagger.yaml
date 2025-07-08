@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  title: Exercise 3 - Calculator Portfolio Frontend
+  version: 1.0.0
+  description: |
+    API documentation for Exercise 3 which serves a static HTML calculator portfolio frontend.
+    This server provides a user interface that connects to the Calculator API from Exercise 2.
+    It demonstrates serving static files and frontend-backend integration.
+  contact:
+    name: Samuel Love
+    email: samuelwelove@icloud.com
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3005
+    description: Calculator Portfolio Frontend Server
+
+tags:
+  - name: Frontend
+    description: Static file serving and calculator interface
+  - name: System
+    description: System health and information
+
+paths:
+  /:
+    get:
+      tags:
+        - Frontend
+      summary: Calculator Interface
+      description: Serves the main calculator HTML interface that connects to Exercise 2 API
+      responses:
+        '200':
+          description: Calculator HTML interface served successfully
+          content:
+            text/html:
+              schema:
+                type: string
+                description: HTML content for the calculator interface
+              example: |
+                <!DOCTYPE html>
+                <html>
+                <head><title>Calculator Portfolio</title></head>
+                <body>...</body>
+                </html>
+
+  /health:
+    get:
+      tags:
+        - System
+      summary: Health Check
+      description: Returns server health status and connection information
+      responses:
+        '200':
+          description: Server health information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [healthy, unhealthy]
+                    example: "healthy"
+                  server:
+                    type: string
+                    example: "Exercise 3 - Calculator Portfolio"
+                  port:
+                    type: integer
+                    example: 3005
+                  timestamp:
+                    type: string
+                    format: date-time
+                required:
+                  - status
+                  - server
+                  - port
+                  - timestamp
+
+  /{path}:
+    get:
+      tags:
+        - Frontend
+      summary: Static Assets
+      description: Serves static files (CSS, JS, images) for the calculator interface
+      parameters:
+        - name: path
+          in: path
+          required: true
+          description: Path to static asset
+          schema:
+            type: string
+          examples:
+            css:
+              value: "styles.css"
+              description: CSS stylesheet
+            js:
+              value: "script.js"
+              description: JavaScript file
+            image:
+              value: "logo.png"
+              description: Image asset
+      responses:
+        '200':
+          description: Static file served successfully
+          content:
+            text/css:
+              schema:
+                type: string
+                description: CSS stylesheet content
+            application/javascript:
+              schema:
+                type: string
+                description: JavaScript code
+            image/*:
+              schema:
+                type: string
+                format: binary
+                description: Image file
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Route not found"
+        server:
+          type: string
+          description: Server identifier
+          example: "Calculator Portfolio"
+        port:
+          type: integer
+          description: Server port
+          example: 3005
+        message:
+          type: string
+          description: Additional error details
+          example: "Only the calculator interface is available at /"
+      required:
+        - error
+        - server
+        - port
+        - message
+
+  examples:
+    HealthResponse:
+      summary: Healthy server response
+      value:
+        status: "healthy"
+        server: "Exercise 3 - Calculator Portfolio"
+        port: 3005
+        timestamp: "2025-01-07T12:00:00.000Z"
+
+    NotFoundResponse:
+      summary: Route not found error
+      value:
+        error: "Route not found"
+        server: "Calculator Portfolio"
+        port: 3005
+        message: "Only the calculator interface is available at /"
+
+externalDocs:
+  description: Calculator API Backend (Exercise 2)
+  url: http://localhost:3004

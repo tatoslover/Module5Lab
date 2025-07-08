@@ -1,0 +1,273 @@
+openapi: 3.0.0
+info:
+  title: Exercise 1 - Multiple Web Servers API
+  version: 1.0.0
+  description: |
+    API documentation for Exercise 1 which demonstrates multiple Express.js servers running on different ports.
+    This exercise includes three independent servers (ports 3001, 3002, 3003) each with their own endpoints.
+  contact:
+    name: Samuel Love
+    email: samuelwelove@icloud.com
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3001
+    description: Server 1 - Basic Express Server
+  - url: http://localhost:3002
+    description: Server 2 - Extended Express Server
+  - url: http://localhost:3003
+    description: Server 3 - Advanced Express Server
+
+tags:
+  - name: Server 1
+    description: Basic server operations and health checks
+  - name: Server 2
+    description: Extended server with additional functionality
+  - name: Server 3
+    description: Advanced server with full feature set
+  - name: Health
+    description: Health check endpoints across all servers
+  - name: Echo
+    description: Echo functionality for testing requests
+
+paths:
+  /:
+    get:
+      tags:
+        - Server 1
+      summary: Server 1 Welcome
+      description: Returns welcome message and available endpoints for Server 1
+      responses:
+        '200':
+          description: Welcome message with server information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome to Server 1!"
+                  server:
+                    type: string
+                    example: "Server 1"
+                  port:
+                    type: integer
+                    example: 3001
+                  timestamp:
+                    type: string
+                    format: date-time
+                  endpoints:
+                    type: array
+                    items:
+                      type: string
+                    example: ["GET /", "GET /health", "GET /info", "POST /echo"]
+        '404':
+          description: Route not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      tags:
+        - Health
+        - Server 1
+      summary: Health Check
+      description: Returns server health status including uptime and memory usage
+      responses:
+        '200':
+          description: Server health information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  server:
+                    type: string
+                    example: "Server 1"
+                  port:
+                    type: integer
+                    example: 3001
+                  uptime:
+                    type: number
+                    description: Server uptime in seconds
+                    example: 1234.567
+                  memory:
+                    type: object
+                    description: Memory usage information
+                    properties:
+                      rss:
+                        type: integer
+                        description: Resident Set Size
+                      heapTotal:
+                        type: integer
+                        description: Total heap size
+                      heapUsed:
+                        type: integer
+                        description: Used heap size
+                      external:
+                        type: integer
+                        description: External memory usage
+                      arrayBuffers:
+                        type: integer
+                        description: Array buffers memory usage
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /info:
+    get:
+      tags:
+        - Server 1
+      summary: Server Information
+      description: Returns detailed server information including Node.js version and platform
+      responses:
+        '200':
+          description: Server information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: "Server 1"
+                  port:
+                    type: integer
+                    example: 3001
+                  nodeVersion:
+                    type: string
+                    example: "v18.17.0"
+                  platform:
+                    type: string
+                    example: "darwin"
+                  environment:
+                    type: string
+                    example: "development"
+                  pid:
+                    type: integer
+                    description: Process ID
+                    example: 12345
+
+  /echo:
+    post:
+      tags:
+        - Echo
+        - Server 1
+      summary: Echo Request
+      description: Echoes back the request body and headers for testing purposes
+      requestBody:
+        description: Any JSON data to echo back
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+            example:
+              message: "Hello World"
+              data: [1, 2, 3]
+      responses:
+        '200':
+          description: Echo response with received data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Echo from Server 1"
+                  server:
+                    type: string
+                    example: "Server 1"
+                  port:
+                    type: integer
+                    example: 3001
+                  receivedData:
+                    type: object
+                    description: The data that was sent in the request body
+                    additionalProperties: true
+                  headers:
+                    type: object
+                    description: Request headers
+                    additionalProperties: true
+                  timestamp:
+                    type: string
+                    format: date-time
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        server:
+          type: string
+          description: Server identifier
+        port:
+          type: integer
+          description: Server port
+        requestedPath:
+          type: string
+          description: The path that was requested
+        method:
+          type: string
+          description: HTTP method used
+        message:
+          type: string
+          description: Additional error details
+      example:
+        error: "Route not found"
+        server: "Server 1"
+        port: 3001
+        requestedPath: "/nonexistent"
+        method: "GET"
+
+    ServerInfo:
+      type: object
+      properties:
+        server:
+          type: string
+          description: Server name
+        port:
+          type: integer
+          description: Server port
+        nodeVersion:
+          type: string
+          description: Node.js version
+        platform:
+          type: string
+          description: Operating system platform
+        environment:
+          type: string
+          description: Node environment
+        pid:
+          type: integer
+          description: Process ID
+
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+        server:
+          type: string
+        port:
+          type: integer
+        uptime:
+          type: number
+        memory:
+          type: object
+        timestamp:
+          type: string
+          format: date-time

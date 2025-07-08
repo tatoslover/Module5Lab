@@ -1,0 +1,420 @@
+openapi: 3.0.0
+info:
+  title: Exercise 7 - Enhanced Calculator API with Libraries
+  version: 1.0.0
+  description: |
+    API documentation for Exercise 7 which implements an Enhanced Calculator API using Express.js with advanced libraries.
+    This API provides basic arithmetic operations (addition, subtraction, multiplication, division) with comprehensive
+    logging capabilities, enhanced error handling, and improved testing coverage. The calculator uses dedicated
+    Calculator and Logger library classes following professional software development practices.
+  contact:
+    name: Samuel Love
+    email: samuelwelove@icloud.com
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3009
+    description: Enhanced Calculator API Server with Libraries
+
+tags:
+  - name: Calculator
+    description: Enhanced arithmetic operations with logging
+  - name: System
+    description: System health and information
+
+paths:
+  /:
+    get:
+      tags:
+        - System
+      summary: Welcome Message
+      description: Returns welcome message and API information
+      responses:
+        '200':
+          description: Welcome message with API details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome to Enhanced Calculator API with Libraries!"
+                  server:
+                    type: string
+                    example: "Exercise 7 - Enhanced Calculator with Libraries"
+                  port:
+                    type: integer
+                    example: 3009
+                  timestamp:
+                    type: string
+                    format: date-time
+                  endpoints:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "GET /calculator/add?num1=5&num2=3"
+                      - "GET /calculator/subtract?num1=10&num2=4"
+                      - "GET /calculator/multiply?num1=6&num2=7"
+                      - "GET /calculator/divide?num1=20&num2=4"
+                  usage:
+                    type: string
+                    example: "Pass num1 and num2 as query parameters"
+
+  /health:
+    get:
+      tags:
+        - System
+      summary: Health Check
+      description: Returns server health status and uptime information
+      responses:
+        '200':
+          description: Server health information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  server:
+                    type: string
+                    example: "Exercise 7 - Enhanced Calculator API"
+                  port:
+                    type: integer
+                    example: 3009
+                  uptime:
+                    type: number
+                    description: Server uptime in seconds
+                    example: 3600.5
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /calculator/add:
+    get:
+      tags:
+        - Calculator
+      summary: Addition Operation with Logging
+      description: Performs addition of two numbers with comprehensive logging and validation
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: First number for addition
+          schema:
+            type: number
+            format: float
+          example: 5.5
+        - name: num2
+          in: query
+          required: true
+          description: Second number for addition
+          schema:
+            type: number
+            format: float
+          example: 3.2
+      responses:
+        '200':
+          description: Addition result with operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "addition"
+                num1: 5.5
+                num2: 3.2
+                result: 8.7
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid numbers provided"
+                message: "Please provide valid num1 and num2 parameters"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /calculator/subtract:
+    get:
+      tags:
+        - Calculator
+      summary: Subtraction Operation with Logging
+      description: Performs subtraction of two numbers (num1 - num2) with comprehensive logging
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: First number (minuend)
+          schema:
+            type: number
+            format: float
+          example: 10.5
+        - name: num2
+          in: query
+          required: true
+          description: Second number (subtrahend)
+          schema:
+            type: number
+            format: float
+          example: 4.2
+      responses:
+        '200':
+          description: Subtraction result with operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "subtraction"
+                num1: 10.5
+                num2: 4.2
+                result: 6.3
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid numbers provided"
+                message: "Please provide valid num1 and num2 parameters"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /calculator/multiply:
+    get:
+      tags:
+        - Calculator
+      summary: Multiplication Operation with Logging
+      description: Performs multiplication of two numbers with comprehensive logging and validation
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: First number for multiplication
+          schema:
+            type: number
+            format: float
+          example: 6.5
+        - name: num2
+          in: query
+          required: true
+          description: Second number for multiplication
+          schema:
+            type: number
+            format: float
+          example: 7.2
+      responses:
+        '200':
+          description: Multiplication result with operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "multiplication"
+                num1: 6.5
+                num2: 7.2
+                result: 46.8
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid numbers provided"
+                message: "Please provide valid num1 and num2 parameters"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /calculator/divide:
+    get:
+      tags:
+        - Calculator
+      summary: Division Operation with Enhanced Logging
+      description: Performs division of two numbers (num1 / num2) with comprehensive logging and zero-division protection
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: First number (dividend)
+          schema:
+            type: number
+            format: float
+          example: 20.4
+        - name: num2
+          in: query
+          required: true
+          description: Second number (divisor)
+          schema:
+            type: number
+            format: float
+            minimum: 0
+            exclusiveMinimum: true
+          example: 4.1
+      responses:
+        '200':
+          description: Division result with operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResult'
+              example:
+                operation: "division"
+                num1: 20.4
+                num2: 4.1
+                result: 4.975609756097561
+        '400':
+          description: Invalid input parameters or division by zero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalidNumbers:
+                  summary: Invalid number parameters
+                  value:
+                    error: "Invalid numbers provided"
+                    message: "Please provide valid num1 and num2 parameters"
+                divisionByZero:
+                  summary: Division by zero error with logging
+                  value:
+                    error: "Division by zero"
+                    message: "Cannot divide by zero"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    CalculationResult:
+      type: object
+      properties:
+        operation:
+          type: string
+          description: The arithmetic operation performed
+          enum: [addition, subtraction, multiplication, division]
+        num1:
+          type: number
+          description: First number used in calculation
+        num2:
+          type: number
+          description: Second number used in calculation
+        result:
+          type: number
+          description: Result of the calculation
+      required:
+        - operation
+        - num1
+        - num2
+        - result
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type or message
+        message:
+          type: string
+          description: Detailed error description
+      required:
+        - error
+        - message
+
+  examples:
+    AdditionResult:
+      summary: Addition operation result with logging
+      value:
+        operation: "addition"
+        num1: 5.5
+        num2: 3.2
+        result: 8.7
+
+    SubtractionResult:
+      summary: Subtraction operation result with logging
+      value:
+        operation: "subtraction"
+        num1: 10.5
+        num2: 4.2
+        result: 6.3
+
+    MultiplicationResult:
+      summary: Multiplication operation result with logging
+      value:
+        operation: "multiplication"
+        num1: 6.5
+        num2: 7.2
+        result: 46.8
+
+    DivisionResult:
+      summary: Division operation result with logging
+      value:
+        operation: "division"
+        num1: 20.4
+        num2: 4.1
+        result: 4.975609756097561
+
+    WelcomeResponse:
+      summary: Welcome message response
+      value:
+        message: "Welcome to Enhanced Calculator API with Libraries!"
+        server: "Exercise 7 - Enhanced Calculator with Libraries"
+        port: 3009
+        timestamp: "2025-01-07T12:00:00.000Z"
+        endpoints:
+          - "GET /calculator/add?num1=5&num2=3"
+          - "GET /calculator/subtract?num1=10&num2=4"
+          - "GET /calculator/multiply?num1=6&num2=7"
+          - "GET /calculator/divide?num1=20&num2=4"
+        usage: "Pass num1 and num2 as query parameters"
+
+    HealthCheckResponse:
+      summary: Health check response
+      value:
+        status: "healthy"
+        server: "Exercise 7 - Enhanced Calculator API"
+        port: 3009
+        uptime: 3600.5
+        timestamp: "2025-01-07T12:00:00.000Z"
+
+    InvalidNumbersError:
+      summary: Invalid numbers error with logging
+      value:
+        error: "Invalid numbers provided"
+        message: "Please provide valid num1 and num2 parameters"
+
+    DivisionByZeroError:
+      summary: Division by zero error with enhanced logging
+      value:
+        error: "Division by zero"
+        message: "Cannot divide by zero"
+
+    InternalServerError:
+      summary: Internal server error with logging
+      value:
+        error: "Internal server error"
+        message: "Detailed error message with logging context"

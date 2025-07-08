@@ -69,14 +69,14 @@ const Navigation = {
   // Navigate to exercise page
   goToExercise: (exerciseNumber) => {
     const exercisePages = {
-      1: "exercise1.html",
+      1: "ports.html",
       2: "exercise2.html",
       3: "exercise3.html",
       4: "exercise4.html",
       5: "exercise5.html",
       6: "exercise6.html",
       7: "exercise7.html",
-      8: "exercise8.html",
+      8: "fakestore.html",
     };
 
     if (exercisePages[exerciseNumber]) {
