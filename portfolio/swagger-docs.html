@@ -577,22 +577,69 @@
                             requestInterceptor: function (request) {
                                 console.log(
                                     "🎭 Simulation Mode: Intercepting request for:",
-                                    request.url,
+                                    request?.url || "unknown",
                                 );
 
-                                // Generate mock response based on exercise and URL
-                                const mockResponse = getMockResponse(
-                                    exerciseNumber,
-                                    request,
-                                );
+                                // Ensure we have a valid request object
+                                if (!request) {
+                                    return Promise.resolve({
+                                        url: "/",
+                                        status: 200,
+                                        statusText: "OK",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        text: JSON.stringify({
+                                            message: "Mock response",
+                                            timestamp: new Date().toISOString(),
+                                        }),
+                                    });
+                                }
 
-                                console.log(
-                                    "✅ Mock response generated:",
-                                    mockResponse,
-                                );
+                                // Sanitize the URL to prevent undefined errors
+                                const sanitizedRequest = {
+                                    url: (request.url || "/").toString(),
+                                    method: (
+                                        request.method || "GET"
+                                    ).toString(),
+                                    headers: request.headers || {},
+                                    body: request.body || null,
+                                };
 
-                                // Return the mock response immediately
-                                return Promise.resolve(mockResponse);
+                                try {
+                                    // Generate mock response based on exercise and URL
+                                    const mockResponse = getMockResponse(
+                                        exerciseNumber,
+                                        sanitizedRequest,
+                                    );
+
+                                    console.log(
+                                        "✅ Mock response generated:",
+                                        mockResponse,
+                                    );
+
+                                    // Return the mock response immediately
+                                    return Promise.resolve(mockResponse);
+                                } catch (error) {
+                                    console.error(
+                                        "Error generating mock response:",
+                                        error,
+                                    );
+                                    return Promise.resolve({
+                                        url: sanitizedRequest.url,
+                                        status: 200,
+                                        statusText: "OK",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        text: JSON.stringify({
+                                            message:
+                                                "Simulation mode mock response",
+                                            timestamp: new Date().toISOString(),
+                                            error: "Response generation failed",
+                                        }),
+                                    });
+                                }
                             },
                             onComplete: function () {
                                 console.log(
@@ -691,400 +738,447 @@
 
             // Mock response generator for simulation
             function getMockResponse(exerciseNumber, request) {
-                const url = request?.url || "/";
-                const method = request?.method || "GET";
-
-                // Parse URL to extract query parameters
-                let urlObj;
                 try {
-                    urlObj = new URL(url, window.location.origin);
-                } catch (e) {
-                    urlObj = {
-                        pathname: url,
-                        searchParams: new URLSearchParams(),
-                    };
-                }
+                    const url = String(request?.url || "/");
+                    const method = String(request?.method || "GET");
 
-                const path = urlObj.pathname;
-                const params = urlObj.searchParams;
+                    // Parse URL to extract query parameters with robust error handling
+                    let urlObj;
+                    let path = "/";
+                    let params = new URLSearchParams();
 
-                // Generate realistic mock responses based on exercise and endpoint
-                let responseData = {};
-
-                if (exerciseNumber === 1) {
-                    if (path.includes("/health")) {
-                        responseData = {
-                            status: "healthy",
-                            server: "Mock Server 1",
-                            port: 3001,
-                            uptime: Math.floor(Math.random() * 86400),
-                            timestamp: new Date().toISOString(),
-                            checks: {
-                                database: "connected",
-                                memory: "95% available",
-                                cpu: "12% usage",
-                            },
-                        };
-                    } else {
-                        responseData = {
-                            message:
-                                "Welcome to Exercise 1 - Multi-Port Server Management!",
-                            server: "Mock Server 1",
-                            port: 3001,
-                            timestamp: new Date().toISOString(),
-                            activeConnections: Math.floor(Math.random() * 100),
-                            version: "1.0.0",
-                        };
+                    try {
+                        // Try to parse as a full URL first
+                        urlObj = new URL(url, window.location.origin);
+                        path = urlObj.pathname;
+                        params = urlObj.searchParams;
+                    } catch (e) {
+                        try {
+                            // If that fails, try to parse as a path with query string
+                            const [pathname, queryString] = url.split("?");
+                            path = pathname || "/";
+                            params = new URLSearchParams(queryString || "");
+                        } catch (e2) {
+                            // If all parsing fails, use the URL as-is as the path
+                            path = url.startsWith("/") ? url : "/" + url;
+                            params = new URLSearchParams();
+                        }
                     }
-                } else if (exerciseNumber >= 2 && exerciseNumber <= 7) {
-                    // Calculator APIs - use actual query parameters if available
-                    if (path.includes("/add")) {
-                        const num1 = parseFloat(params.get("num1")) || 10;
-                        const num2 = parseFloat(params.get("num2")) || 5;
-                        const result = num1 + num2;
-                        responseData = {
-                            operation: "addition",
-                            num1: num1,
-                            num2: num2,
-                            result: result,
-                            timestamp: new Date().toISOString(),
-                        };
-                        if (exerciseNumber === 6)
-                            responseData.testCoverage = "100%";
-                        if (exerciseNumber === 7) {
-                            responseData.logLevel = "INFO";
-                            responseData.executionTime = `${Math.random() * 5}ms`;
-                        }
-                    } else if (path.includes("/subtract")) {
-                        const num1 = parseFloat(params.get("num1")) || 20;
-                        const num2 = parseFloat(params.get("num2")) || 8;
-                        const result = num1 - num2;
-                        responseData = {
-                            operation: "subtraction",
-                            num1: num1,
-                            num2: num2,
-                            result: result,
-                            timestamp: new Date().toISOString(),
-                        };
-                        if (exerciseNumber === 6)
-                            responseData.testCoverage = "100%";
-                        if (exerciseNumber === 7) {
-                            responseData.logLevel = "INFO";
-                            responseData.executionTime = `${Math.random() * 5}ms`;
-                        }
-                    } else if (path.includes("/multiply")) {
-                        const num1 = parseFloat(params.get("num1")) || 6;
-                        const num2 = parseFloat(params.get("num2")) || 7;
-                        const result = num1 * num2;
-                        responseData = {
-                            operation: "multiplication",
-                            num1: num1,
-                            num2: num2,
-                            result: result,
-                            timestamp: new Date().toISOString(),
-                        };
-                        if (exerciseNumber === 6)
-                            responseData.testCoverage = "100%";
-                        if (exerciseNumber === 7) {
-                            responseData.logLevel = "INFO";
-                            responseData.executionTime = `${Math.random() * 5}ms`;
-                        }
-                    } else if (path.includes("/divide")) {
-                        const num1 = parseFloat(params.get("num1")) || 50;
-                        const num2 = parseFloat(params.get("num2")) || 10;
-                        const result =
-                            num2 !== 0
-                                ? num1 / num2
-                                : "Error: Division by zero";
-                        responseData = {
-                            operation: "division",
-                            num1: num1,
-                            num2: num2,
-                            result: result,
-                            timestamp: new Date().toISOString(),
-                        };
-                        if (exerciseNumber === 6)
-                            responseData.testCoverage = "100%";
-                        if (exerciseNumber === 7) {
-                            responseData.logLevel = "INFO";
-                            responseData.executionTime = `${Math.random() * 5}ms`;
-                        }
-                    } else if (exerciseNumber === 3 && path === "/") {
-                        // Portfolio page for Exercise 3
-                        return {
-                            url: url,
-                            status: 200,
-                            statusText: "OK",
-                            headers: {
-                                "Content-Type": "text/html",
-                                "X-Mock-Response": "true",
-                            },
-                            text: "<!DOCTYPE html><html><head><title>My Portfolio</title></head><body><h1>Welcome to My Portfolio</h1><p>This is a sample portfolio page served by Exercise 3.</p></body></html>",
-                        };
-                    } else {
-                        responseData = {
-                            message: `Welcome to Exercise ${exerciseNumber} Calculator API!`,
-                            availableOperations: [
-                                "add",
-                                "subtract",
-                                "multiply",
-                                "divide",
-                            ],
-                            timestamp: new Date().toISOString(),
-                            version: "1.0.0",
-                        };
-                    }
-                } else if (exerciseNumber === 4 || exerciseNumber === 5) {
-                    // Friends APIs
-                    if (path.includes("/friends") && method === "GET") {
-                        if (path.includes("/filter")) {
-                            const gender = params.get("gender") || "male";
-                            const letter = params.get("letter") || "J";
-                            const filteredFriends = [
-                                { id: 1, name: "John Doe", gender: "male" },
-                                { id: 3, name: "James Smith", gender: "male" },
-                                {
-                                    id: 7,
-                                    name: "Jennifer Wilson",
-                                    gender: "female",
-                                },
-                            ].filter(
-                                (friend) =>
-                                    friend.gender === gender &&
-                                    friend.name.startsWith(letter),
-                            );
+
+                    // Generate realistic mock responses based on exercise and endpoint
+                    let responseData = {};
+
+                    if (exerciseNumber === 1) {
+                        if (path.includes("/health")) {
                             responseData = {
-                                message: "Friends filtered successfully",
-                                count: filteredFriends.length,
-                                filters: { gender, letter },
-                                friends: filteredFriends,
+                                status: "healthy",
+                                server: "Mock Server 1",
+                                port: 3001,
+                                uptime: Math.floor(Math.random() * 86400),
                                 timestamp: new Date().toISOString(),
-                            };
-                        } else if (path.match(/\/friends\/\d+$/)) {
-                            const friendId = parseInt(path.split("/").pop());
-                            responseData = {
-                                message: `Friend found with ID ${friendId}`,
-                                friend: {
-                                    id: friendId,
-                                    name: "John Doe",
-                                    gender: "male",
-                                    email: "john.doe@email.com",
+                                checks: {
+                                    database: "connected",
+                                    memory: "95% available",
+                                    cpu: "12% usage",
                                 },
-                                timestamp: new Date().toISOString(),
                             };
                         } else {
                             responseData = {
                                 message:
-                                    exerciseNumber === 5
-                                        ? "Retrieved all friends successfully (MVC)"
-                                        : "Retrieved all friends successfully",
-                                count: 5,
-                                friends: [
-                                    {
-                                        id: 1,
-                                        name: "John Doe",
-                                        gender: "male",
-                                        email: "john.doe@email.com",
-                                    },
-                                    {
-                                        id: 2,
-                                        name: "Jane Smith",
-                                        gender: "female",
-                                        email: "jane.smith@email.com",
-                                    },
+                                    "Welcome to Exercise 1 - Multi-Port Server Management!",
+                                server: "Mock Server 1",
+                                port: 3001,
+                                timestamp: new Date().toISOString(),
+                                activeConnections: Math.floor(
+                                    Math.random() * 100,
+                                ),
+                                version: "1.0.0",
+                            };
+                        }
+                    } else if (exerciseNumber >= 2 && exerciseNumber <= 7) {
+                        // Calculator APIs - use actual query parameters if available
+                        if (path.includes("/add")) {
+                            const num1 = parseFloat(params.get("num1")) || 10;
+                            const num2 = parseFloat(params.get("num2")) || 5;
+                            const result = num1 + num2;
+                            responseData = {
+                                operation: "addition",
+                                num1: num1,
+                                num2: num2,
+                                result: result,
+                                timestamp: new Date().toISOString(),
+                            };
+                            if (exerciseNumber === 6)
+                                responseData.testCoverage = "100%";
+                            if (exerciseNumber === 7) {
+                                responseData.logLevel = "INFO";
+                                responseData.executionTime = `${Math.random() * 5}ms`;
+                            }
+                        } else if (path.includes("/subtract")) {
+                            const num1 = parseFloat(params.get("num1")) || 20;
+                            const num2 = parseFloat(params.get("num2")) || 8;
+                            const result = num1 - num2;
+                            responseData = {
+                                operation: "subtraction",
+                                num1: num1,
+                                num2: num2,
+                                result: result,
+                                timestamp: new Date().toISOString(),
+                            };
+                            if (exerciseNumber === 6)
+                                responseData.testCoverage = "100%";
+                            if (exerciseNumber === 7) {
+                                responseData.logLevel = "INFO";
+                                responseData.executionTime = `${Math.random() * 5}ms`;
+                            }
+                        } else if (path.includes("/multiply")) {
+                            const num1 = parseFloat(params.get("num1")) || 6;
+                            const num2 = parseFloat(params.get("num2")) || 7;
+                            const result = num1 * num2;
+                            responseData = {
+                                operation: "multiplication",
+                                num1: num1,
+                                num2: num2,
+                                result: result,
+                                timestamp: new Date().toISOString(),
+                            };
+                            if (exerciseNumber === 6)
+                                responseData.testCoverage = "100%";
+                            if (exerciseNumber === 7) {
+                                responseData.logLevel = "INFO";
+                                responseData.executionTime = `${Math.random() * 5}ms`;
+                            }
+                        } else if (path.includes("/divide")) {
+                            const num1 = parseFloat(params.get("num1")) || 50;
+                            const num2 = parseFloat(params.get("num2")) || 10;
+                            const result =
+                                num2 !== 0
+                                    ? num1 / num2
+                                    : "Error: Division by zero";
+                            responseData = {
+                                operation: "division",
+                                num1: num1,
+                                num2: num2,
+                                result: result,
+                                timestamp: new Date().toISOString(),
+                            };
+                            if (exerciseNumber === 6)
+                                responseData.testCoverage = "100%";
+                            if (exerciseNumber === 7) {
+                                responseData.logLevel = "INFO";
+                                responseData.executionTime = `${Math.random() * 5}ms`;
+                            }
+                        } else if (exerciseNumber === 3 && path === "/") {
+                            // Portfolio page for Exercise 3
+                            return {
+                                url: url,
+                                status: 200,
+                                statusText: "OK",
+                                headers: {
+                                    "Content-Type": "text/html",
+                                    "X-Mock-Response": "true",
+                                },
+                                text: "<!DOCTYPE html><html><head><title>My Portfolio</title></head><body><h1>Welcome to My Portfolio</h1><p>This is a sample portfolio page served by Exercise 3.</p></body></html>",
+                            };
+                        } else {
+                            responseData = {
+                                message: `Welcome to Exercise ${exerciseNumber} Calculator API!`,
+                                availableOperations: [
+                                    "add",
+                                    "subtract",
+                                    "multiply",
+                                    "divide",
+                                ],
+                                timestamp: new Date().toISOString(),
+                                version: "1.0.0",
+                            };
+                        }
+                    } else if (exerciseNumber === 4 || exerciseNumber === 5) {
+                        // Friends APIs
+                        if (path.includes("/friends") && method === "GET") {
+                            if (path.includes("/filter")) {
+                                const gender = params.get("gender") || "male";
+                                const letter = params.get("letter") || "J";
+                                const filteredFriends = [
+                                    { id: 1, name: "John Doe", gender: "male" },
                                     {
                                         id: 3,
                                         name: "James Smith",
                                         gender: "male",
-                                        email: "james.smith@email.com",
                                     },
                                     {
-                                        id: 4,
-                                        name: "Emily Johnson",
+                                        id: 7,
+                                        name: "Jennifer Wilson",
                                         gender: "female",
-                                        email: "emily.johnson@email.com",
                                     },
-                                    {
-                                        id: 5,
-                                        name: "Michael Brown",
+                                ].filter(
+                                    (friend) =>
+                                        friend.gender === gender &&
+                                        friend.name.startsWith(letter),
+                                );
+                                responseData = {
+                                    message: "Friends filtered successfully",
+                                    count: filteredFriends.length,
+                                    filters: { gender, letter },
+                                    friends: filteredFriends,
+                                    timestamp: new Date().toISOString(),
+                                };
+                            } else if (path.match(/\/friends\/\d+$/)) {
+                                const friendId = parseInt(
+                                    path.split("/").pop(),
+                                );
+                                responseData = {
+                                    message: `Friend found with ID ${friendId}`,
+                                    friend: {
+                                        id: friendId,
+                                        name: "John Doe",
                                         gender: "male",
-                                        email: "michael.brown@email.com",
+                                        email: "john.doe@email.com",
                                     },
+                                    timestamp: new Date().toISOString(),
+                                };
+                            } else {
+                                responseData = {
+                                    message:
+                                        exerciseNumber === 5
+                                            ? "Retrieved all friends successfully (MVC)"
+                                            : "Retrieved all friends successfully",
+                                    count: 5,
+                                    friends: [
+                                        {
+                                            id: 1,
+                                            name: "John Doe",
+                                            gender: "male",
+                                            email: "john.doe@email.com",
+                                        },
+                                        {
+                                            id: 2,
+                                            name: "Jane Smith",
+                                            gender: "female",
+                                            email: "jane.smith@email.com",
+                                        },
+                                        {
+                                            id: 3,
+                                            name: "James Smith",
+                                            gender: "male",
+                                            email: "james.smith@email.com",
+                                        },
+                                        {
+                                            id: 4,
+                                            name: "Emily Johnson",
+                                            gender: "female",
+                                            email: "emily.johnson@email.com",
+                                        },
+                                        {
+                                            id: 5,
+                                            name: "Michael Brown",
+                                            gender: "male",
+                                            email: "michael.brown@email.com",
+                                        },
+                                    ],
+                                    timestamp: new Date().toISOString(),
+                                };
+                                if (exerciseNumber === 5) {
+                                    responseData.metadata = {
+                                        totalPages: 1,
+                                        currentPage: 1,
+                                        architecture: "MVC",
+                                    };
+                                }
+                            }
+                        } else if (
+                            path.includes("/friends") &&
+                            method === "POST"
+                        ) {
+                            responseData = {
+                                message:
+                                    exerciseNumber === 5
+                                        ? "Friend added successfully (MVC)"
+                                        : "Friend added successfully",
+                                friend: {
+                                    id: 6,
+                                    name: "Alice Johnson",
+                                    gender: "female",
+                                    email: "alice.johnson@email.com",
+                                },
+                                totalFriends: 6,
+                                timestamp: new Date().toISOString(),
+                            };
+                        } else if (
+                            path.includes("/friends") &&
+                            method === "PUT"
+                        ) {
+                            responseData = {
+                                message: "Friend updated successfully",
+                                friend: {
+                                    id: 1,
+                                    name: "John Updated",
+                                    gender: "male",
+                                    email: "john.updated@email.com",
+                                },
+                                timestamp: new Date().toISOString(),
+                            };
+                        } else if (
+                            path.includes("/friends") &&
+                            method === "DELETE"
+                        ) {
+                            responseData = {
+                                message: "Friend deleted successfully",
+                                deletedFriendId: 1,
+                                remainingFriends: 4,
+                                timestamp: new Date().toISOString(),
+                            };
+                        } else {
+                            responseData = {
+                                message: `Welcome to Exercise ${exerciseNumber} Friends API!`,
+                                availableEndpoints: [
+                                    "/friends",
+                                    "/friends/filter",
+                                    "/friends/:id",
                                 ],
                                 timestamp: new Date().toISOString(),
                             };
-                            if (exerciseNumber === 5) {
-                                responseData.metadata = {
-                                    totalPages: 1,
-                                    currentPage: 1,
-                                    architecture: "MVC",
-                                };
-                            }
                         }
-                    } else if (path.includes("/friends") && method === "POST") {
-                        responseData = {
-                            message:
-                                exerciseNumber === 5
-                                    ? "Friend added successfully (MVC)"
-                                    : "Friend added successfully",
-                            friend: {
-                                id: 6,
-                                name: "Alice Johnson",
-                                gender: "female",
-                                email: "alice.johnson@email.com",
-                            },
-                            totalFriends: 6,
-                            timestamp: new Date().toISOString(),
-                        };
-                    } else if (path.includes("/friends") && method === "PUT") {
-                        responseData = {
-                            message: "Friend updated successfully",
-                            friend: {
-                                id: 1,
-                                name: "John Updated",
-                                gender: "male",
-                                email: "john.updated@email.com",
-                            },
-                            timestamp: new Date().toISOString(),
-                        };
-                    } else if (
-                        path.includes("/friends") &&
-                        method === "DELETE"
-                    ) {
-                        responseData = {
-                            message: "Friend deleted successfully",
-                            deletedFriendId: 1,
-                            remainingFriends: 4,
-                            timestamp: new Date().toISOString(),
-                        };
-                    } else {
-                        responseData = {
-                            message: `Welcome to Exercise ${exerciseNumber} Friends API!`,
-                            availableEndpoints: [
-                                "/friends",
-                                "/friends/filter",
-                                "/friends/:id",
-                            ],
-                            timestamp: new Date().toISOString(),
-                        };
-                    }
-                } else if (exerciseNumber === 8) {
-                    // eCommerce API
-                    if (path.includes("/products/categories")) {
-                        responseData = {
-                            success: true,
-                            count: 4,
-                            data: [
-                                "electronics",
-                                "jewelery",
-                                "men's clothing",
-                                "women's clothing",
-                            ],
-                            timestamp: new Date().toISOString(),
-                            cached: true,
-                            cacheExpiry: new Date(
-                                Date.now() + 3600000,
-                            ).toISOString(),
-                        };
-                    } else if (path.includes("/products/search")) {
-                        const query = params.get("q") || "backpack";
-                        responseData = {
-                            success: true,
-                            query: query,
-                            count: 1,
-                            data: [
+                    } else if (exerciseNumber === 8) {
+                        // eCommerce API
+                        if (path.includes("/products/categories")) {
+                            responseData = {
+                                success: true,
+                                count: 4,
+                                data: [
+                                    "electronics",
+                                    "jewelery",
+                                    "men's clothing",
+                                    "women's clothing",
+                                ],
+                                timestamp: new Date().toISOString(),
+                                cached: true,
+                                cacheExpiry: new Date(
+                                    Date.now() + 3600000,
+                                ).toISOString(),
+                            };
+                        } else if (path.includes("/products/search")) {
+                            const query = params.get("q") || "backpack";
+                            responseData = {
+                                success: true,
+                                query: query,
+                                count: 1,
+                                data: [
+                                    {
+                                        id: 1,
+                                        title: "Fjallraven - Foldsack No. 1 Backpack",
+                                        price: 109.95,
+                                        category: "men's clothing",
+                                        description:
+                                            "Your perfect pack for everyday use and walks in the forest",
+                                        image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+                                        rating: { rate: 3.9, count: 120 },
+                                    },
+                                ],
+                                timestamp: new Date().toISOString(),
+                                searchTime: `${Math.random() * 100}ms`,
+                            };
+                        } else if (path.includes("/products")) {
+                            const limit = parseInt(params.get("limit")) || 20;
+                            const products = [
                                 {
                                     id: 1,
                                     title: "Fjallraven - Foldsack No. 1 Backpack",
                                     price: 109.95,
                                     category: "men's clothing",
                                     description:
-                                        "Your perfect pack for everyday use and walks in the forest",
+                                        "Your perfect pack for everyday use",
                                     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
                                     rating: { rate: 3.9, count: 120 },
                                 },
-                            ],
-                            timestamp: new Date().toISOString(),
-                            searchTime: `${Math.random() * 100}ms`,
-                        };
-                    } else if (path.includes("/products")) {
-                        const limit = parseInt(params.get("limit")) || 20;
-                        const products = [
-                            {
-                                id: 1,
-                                title: "Fjallraven - Foldsack No. 1 Backpack",
-                                price: 109.95,
-                                category: "men's clothing",
-                                description:
-                                    "Your perfect pack for everyday use",
-                                image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-                                rating: { rate: 3.9, count: 120 },
-                            },
-                            {
-                                id: 2,
-                                title: "Mens Casual Premium Slim Fit T-Shirts",
-                                price: 22.3,
-                                category: "men's clothing",
-                                description: "Slim-fitting style for men",
-                                image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-                                rating: { rate: 4.1, count: 259 },
-                            },
-                            {
-                                id: 3,
-                                title: "Mens Cotton Jacket",
-                                price: 55.99,
-                                category: "men's clothing",
-                                description: "Great outerwear for men",
-                                image: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-                                rating: { rate: 4.7, count: 500 },
-                            },
-                        ];
-                        responseData = {
-                            success: true,
-                            count: Math.min(products.length, limit),
-                            limit: limit,
-                            data: products.slice(0, limit),
-                            timestamp: new Date().toISOString(),
-                            cached: true,
-                        };
+                                {
+                                    id: 2,
+                                    title: "Mens Casual Premium Slim Fit T-Shirts",
+                                    price: 22.3,
+                                    category: "men's clothing",
+                                    description: "Slim-fitting style for men",
+                                    image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+                                    rating: { rate: 4.1, count: 259 },
+                                },
+                                {
+                                    id: 3,
+                                    title: "Mens Cotton Jacket",
+                                    price: 55.99,
+                                    category: "men's clothing",
+                                    description: "Great outerwear for men",
+                                    image: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+                                    rating: { rate: 4.7, count: 500 },
+                                },
+                            ];
+                            responseData = {
+                                success: true,
+                                count: Math.min(products.length, limit),
+                                limit: limit,
+                                data: products.slice(0, limit),
+                                timestamp: new Date().toISOString(),
+                                cached: true,
+                            };
+                        } else {
+                            responseData = {
+                                message:
+                                    "Welcome to Exercise 8 - eCommerce Store API!",
+                                availableEndpoints: [
+                                    "/api/products",
+                                    "/api/products/categories",
+                                    "/api/products/search",
+                                ],
+                                timestamp: new Date().toISOString(),
+                                version: "2.0.0",
+                            };
+                        }
                     } else {
                         responseData = {
-                            message:
-                                "Welcome to Exercise 8 - eCommerce Store API!",
-                            availableEndpoints: [
-                                "/api/products",
-                                "/api/products/categories",
-                                "/api/products/search",
-                            ],
+                            message: `Mock response for Exercise ${exerciseNumber}`,
                             timestamp: new Date().toISOString(),
-                            version: "2.0.0",
+                            success: true,
+                            data: {
+                                exerciseNumber: exerciseNumber,
+                                endpoint: path,
+                                method: method,
+                            },
                         };
                     }
-                } else {
-                    responseData = {
-                        message: `Mock response for Exercise ${exerciseNumber}`,
-                        timestamp: new Date().toISOString(),
-                        success: true,
-                        data: {
-                            exerciseNumber: exerciseNumber,
-                            endpoint: path,
-                            method: method,
+
+                    return {
+                        url: String(url),
+                        status: 200,
+                        statusText: "OK",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Mock-Response": "true",
+                            "X-Response-Time": `${Math.random() * 100}ms`,
+                            "Access-Control-Allow-Origin": "*",
                         },
+                        text: JSON.stringify(responseData, null, 2),
+                    };
+                } catch (error) {
+                    console.error("Error in getMockResponse:", error);
+                    return {
+                        url: String(request?.url || "/"),
+                        status: 200,
+                        statusText: "OK",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Mock-Response": "true",
+                            "Access-Control-Allow-Origin": "*",
+                        },
+                        text: JSON.stringify(
+                            {
+                                message: "Mock response (error fallback)",
+                                timestamp: new Date().toISOString(),
+                                exerciseNumber: exerciseNumber,
+                                error: "Response generation encountered an error",
+                            },
+                            null,
+                            2,
+                        ),
                     };
                 }
-
-                return {
-                    url: url,
-                    status: 200,
-                    statusText: "OK",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Mock-Response": "true",
-                        "X-Response-Time": `${Math.random() * 100}ms`,
-                        "Access-Control-Allow-Origin": "*",
-                    },
-                    text: JSON.stringify(responseData, null, 2),
-                };
             }
 
             // Initialize the app
