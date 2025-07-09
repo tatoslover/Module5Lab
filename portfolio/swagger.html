@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Module 5 Lab - API Documentation</title>
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/swagger.css" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui.css"
+        />
+    </head>
+    <body>
+        <div class="swagger-container">
+            <header class="header">
+                <h1>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG3HuBlAUw3Wu-46hoogyANMHo1VC-tKnE1Q&s"
+                        alt="IOD Logo"
+                        class="header-logo"
+                    />Module 5 Lab - API Documentation
+                </h1>
+                <p>Comprehensive Swagger documentation for all exercises</p>
+            </header>
+
+            <div class="home-nav">
+                <a href="index.html" class="btn">🏠 Home</a>
+            </div>
+
+            <div class="exercise-selector">
+                <h3
+                    style="
+                        text-align: center;
+                        margin-bottom: 25px;
+                        color: #495057;
+                        font-size: 1.3em;
+                    "
+                >
+                    Select Exercise to View Documentation
+                </h3>
+                <div class="exercise-tabs">
+                    <div class="exercise-tab active" data-exercise="1">
+                        <div><strong>Exercise 1</strong></div>
+                        <div><small>Multi-Port Servers</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="2">
+                        <div><strong>Exercise 2</strong></div>
+                        <div><small>Basic Calculator</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="3">
+                        <div><strong>Exercise 3</strong></div>
+                        <div><small>Calculator + Portfolio</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="4">
+                        <div><strong>Exercise 4</strong></div>
+                        <div><small>Friends API</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="5">
+                        <div><strong>Exercise 5</strong></div>
+                        <div><small>Friends MVC</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="6">
+                        <div><strong>Exercise 6</strong></div>
+                        <div><small>Calculator + Tests</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="7">
+                        <div><strong>Exercise 7</strong></div>
+                        <div><small>Enhanced Calculator</small></div>
+                    </div>
+                    <div class="exercise-tab" data-exercise="8">
+                        <div><strong>Exercise 8</strong></div>
+                        <div><small>eCommerce Store</small></div>
+                    </div>
+                </div>
+
+                <div class="exercise-info">
+                    <h3 id="exercise-title">
+                        Exercise 1 - Multi-Port Server Management
+                    </h3>
+                    <p id="exercise-description">
+                        Learn how to create and manage multiple Express.js
+                        servers running on different ports simultaneously.
+                    </p>
+                </div>
+            </div>
+
+            <div class="swagger-ui-container">
+                <div id="swagger-ui"></div>
+                <div id="loading" class="loading">
+                    Loading API documentation...
+                </div>
+                <div id="error" class="error" style="display: none">
+                    Failed to load API documentation. Please try again.
+                </div>
+            </div>
+
+            <div class="mock-notice">
+                <h4>📋 Documentation Mode - Static API Reference</h4>
+                <p>
+                    <strong
+                        >This is a static documentation viewer for the Module 5
+                        Lab APIs. No live backend servers are connected.</strong
+                    >
+                </p>
+                <p>
+                    ⚠️ <strong>Execute buttons are disabled:</strong> Since
+                    there are no live backend servers, the "Try it out" and
+                    "Execute" buttons have been disabled to prevent network
+                    errors. This is normal behavior for documentation-only mode.
+                </p>
+                <p>
+                    📊 <strong>Example responses:</strong> Each endpoint
+                    includes detailed schema definitions and example responses
+                    in the documentation. Expand the response sections (200,
+                    201, etc.) to see the expected JSON response formats.
+                </p>
+                <p>
+                    🎯 <strong>Portfolio CRUD Operations:</strong> All exercises
+                    include comprehensive portfolio management endpoints (GET,
+                    POST, PUT, DELETE) with complete request/response examples
+                    that demonstrate full CRUD functionality.
+                </p>
+                <p>
+                    🚀 <strong>Perfect for:</strong> Understanding API
+                    structure, exploring endpoint documentation, learning
+                    request/response formats, and planning API implementations
+                    without requiring running servers.
+                </p>
+                <p>
+                    💡 <strong>To test with live servers:</strong> Connect the
+                    actual backend servers from each exercise to enable full
+                    Execute button functionality.
+                </p>
+                <p>
+                    🌐 <strong>Live Example:</strong> For a working example of
+                    Swagger documentation with live backend functionality, see
+                    <a
+                        href="https://barkend.netlify.app/"
+                        target="_blank"
+                        style="color: #0d47a1; text-decoration: underline"
+                        >Mini Project 3 - Barkend API</a
+                    >
+                    which demonstrates fully functional Execute buttons with a
+                    connected live server.
+                </p>
+            </div>
+
+            <div class="footer">
+                <p>Samuel Love 2025</p>
+                <p>Web Development Portfolio</p>
+                <a
+                    href="https://github.com/tatoslover/Module5Lab"
+                    class="github-link"
+                    target="_blank"
+                >
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-standalone-preset.js"></script>
+        <script src="js/swagger.js"></script>
+    </body>
+</html>

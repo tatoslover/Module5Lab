@@ -1,0 +1,294 @@
+.swagger-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    padding: 60px 20px;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.header-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+.exercise-selector {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.exercise-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+
+.exercise-tab {
+    padding: 15px 10px;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-tab:hover {
+    background: #e9ecef;
+    border-color: #dee2e6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.exercise-tab.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(102, 126, 234, 0.3);
+}
+
+.exercise-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+
+.exercise-info h3 {
+    margin: 0 0 10px 0;
+    color: #495057;
+}
+
+.exercise-info p {
+    margin: 0;
+    color: #6c757d;
+    line-height: 1.5;
+}
+
+.swagger-ui-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.loading {
+    text-align: center;
+    padding: 50px;
+    color: #6c757d;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.home-nav {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.home-nav .btn {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.home-nav .btn:hover {
+    background: #5a6fd8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: white;
+    margin-top: 60px;
+}
+
+.footer p {
+    margin: 5px 0;
+    opacity: 0.9;
+}
+
+.github-link {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.github-link:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-2px);
+}
+
+/* Swagger UI customizations */
+.swagger-ui .topbar {
+    display: none;
+}
+
+.swagger-ui .info {
+    margin: 20px 0;
+}
+
+.swagger-ui .scheme-container {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+/* Mock server notice */
+.mock-notice {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid #c3e6cb;
+}
+
+.mock-notice h4 {
+    margin: 0 0 10px 0;
+    color: #155724;
+}
+
+.mock-notice p {
+    margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+    .exercise-tabs {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 10px;
+        max-width: 400px;
+    }
+
+    .exercise-tab {
+        padding: 12px 8px;
+        min-height: 70px;
+        font-size: 0.9em;
+    }
+
+    .swagger-header h1 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .exercise-tabs {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        max-width: 300px;
+    }
+
+    .exercise-tab {
+        padding: 10px 8px;
+        min-height: 60px;
+    }
+}
+
+/* Documentation Mode Styles */
+.swagger-ui .btn.execute {
+    display: none !important;
+}
+
+.swagger-ui .try-out__btn {
+    display: none !important;
+}
+
+.execute-notice {
+    background: #e3f2fd !important;
+    border: 1px solid #2196f3 !important;
+    border-radius: 4px !important;
+    padding: 12px !important;
+    margin: 15px 0 !important;
+    color: #0d47a1 !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+}
+
+.execute-notice strong {
+    color: #0d47a1 !important;
+}
+
+/* Enhanced response section styling */
+.swagger-ui .responses-wrapper {
+    margin-top: 20px !important;
+    border-top: 1px solid #dee2e6 !important;
+    padding-top: 20px !important;
+}
+
+.swagger-ui .response-col_status {
+    font-weight: bold !important;
+    color: #28a745 !important;
+}
+
+.swagger-ui .response-col_description {
+    color: #495057 !important;
+}
+
+/* Ensure proper spacing for operation blocks */
+.swagger-ui .opblock {
+    margin-bottom: 20px !important;
+}
+
+.swagger-ui .opblock-body {
+    padding: 20px !important;
+}
